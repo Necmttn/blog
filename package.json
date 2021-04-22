@@ -1,0 +1,14 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "a blog",
+  "main": "index.js",
+  "scripts": {
+    "build": "eleventy"
+  },
+  "author": "mark evans <mark@meltdownlabs.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@11ty/eleventy": "^0.12.1"
+  }
+}
