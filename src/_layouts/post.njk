@@ -1,0 +1,16 @@
+---
+layout: layout.njk
+title: marknotfound | the blog
+---
+<div class="row">
+  {% include 'avatar-column.njk' %}
+  <div class="nine columns">
+    <span class="article-date">{{ date | readableDate }}</span>
+    <h3 class="article-title">{{ title }}</h3>
+    {{ content | safe }}
+    <div class="article-actions">
+      <a href="/">Go back</a>
+    </div>
+
+  </div>
+</div>

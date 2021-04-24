@@ -9,6 +9,7 @@
   "author": "mark evans <mark@meltdownlabs.com>",
   "license": "ISC",
   "dependencies": {
-    "@11ty/eleventy": "^0.12.1"
+    "@11ty/eleventy": "^0.12.1",
+    "date-fns": "^2.21.1"
   }
 }

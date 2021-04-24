@@ -1,0 +1,11 @@
+---
+layout: layout.njk
+---
+{% set maxPosts = collections.posts.length %}
+<div class="row">
+  {% include 'avatar-column.njk' %}
+  <div class="nine columns">
+    {% set postList = collections.posts %}
+    {% include 'post-list.njk' %}
+  </div>
+</div>
