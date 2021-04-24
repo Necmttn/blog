@@ -1,8 +1,11 @@
 const { format } = require('date-fns');
+const svgContents = require('eleventy-plugin-svg-contents');
 
 module.exports = (eleventyConfig) => {
   eleventyConfig.addPassthroughCopy('img');
   eleventyConfig.addPassthroughCopy('css');
+
+  eleventyConfig.addPlugin(svgContents);
 
   eleventyConfig.addFilter('readableDate', date => {
     return format(date, 'EEEE MMMM d, yyyy');
@@ -18,6 +21,7 @@ module.exports = (eleventyConfig) => {
     'njk',
     'css',
     'jpg',
+    'svg',
   ]);
 
   return {
