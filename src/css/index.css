@@ -62,10 +62,29 @@ img.avatar {
 }
 
 .social-container {
+  width: 75%;
   display: flex;
   justify-content: space-between;
-  flex-direction: column;
   text-decoration: none;
 }
 
 .social-container a { margin-bottom: 16px; }
+
+code { border: none; }
+
+footer { height: 200px; }
+
+@media (min-width: 400px) {
+  .social-container {
+    width: 65%;
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 550px) {
+  .social-container {
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+  }
+}
