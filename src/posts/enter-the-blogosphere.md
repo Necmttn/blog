@@ -1,9 +1,9 @@
 ---
 tags: posts
 title: Enter the ~Blogosphere~
-date: "2021-04-24"
+date: 2021-04-24
 ---
-I've got hobbies and dang it I'm gonna write about 'em. Since the pandemic began, I've gotten into all sorts of weird shit that I never thought I'd be into. Running, crypto/blockchain tech, impromptu road trips, and now blogging. You're gonna hear about all of it here, but first let's do the obligatory "blog tech" post.<!-- excerpt -->
+I've got hobbies and dang it I'm gonna write about 'em. Since the pandemic began, I've gotten into all sorts of weird shit that I never thought I'd be into. Running, blockchain tech, impromptu road trips, and now blogging. You're gonna hear about all of it here, but first let's do the obligatory "blog tech" post.<!-- excerpt -->
 ##### Open Source
 It's all open source. [View the repository on GitHub.](https://github.com/marknotfound/blog)
 
