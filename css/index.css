@@ -70,6 +70,13 @@ img.avatar {
 
 .social-container a { margin-bottom: 16px; }
 
+img.post-image {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
 code { border: none; }
 
 footer { height: 200px; }
@@ -86,5 +93,11 @@ footer { height: 200px; }
     width: 100%;
     align-items: center;
     flex-direction: column;
+  }
+}
+
+@media (min-width: 1000px) {
+  img.post-image {
+    width: 75%;
   }
 }
