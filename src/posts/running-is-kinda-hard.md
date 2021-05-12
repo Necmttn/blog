@@ -1,5 +1,7 @@
 ---
-tags: posts
+tags:
+  - posts
+  - fitness
 title: Running is Kinda Hard
 date: 2021-04-27
 ---
