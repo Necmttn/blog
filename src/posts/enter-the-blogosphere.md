@@ -1,5 +1,8 @@
 ---
-tags: posts
+tags:
+  - posts
+  - tech
+  - meta
 title: Enter the ~Blogosphere~
 date: 2021-04-24
 ---

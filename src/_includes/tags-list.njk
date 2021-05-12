@@ -1,0 +1,10 @@
+<div class="tag-list">
+  <ol>
+  {% for tag in collections.tagList %}
+    <li class="tag-item">
+      {% set tagUrl %}/tags/{{ tag | slug }}/{% endset %}
+      <a href="{{ tagUrl | url }}">{{ tag }}</a>
+    </li>
+  {% endfor %}
+  </ol>
+</div>
