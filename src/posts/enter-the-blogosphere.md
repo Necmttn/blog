@@ -33,10 +33,16 @@ eleventyConfig.addFilter('readableDate', date => {
 There is almost definitely a "better" way to do this. Oh, and the syntax highlighting? [There's a plugin for that](https://www.11ty.dev/docs/plugins/syntaxhighlight/).
 
 ##### Styling
-I am using [Skeleton](http://getskeleton.com/) for the boilerplate and responsiveness. It's simple and lightweight and is my goto for small projects. I do some [very minor overrides](https://github.com/marknotfound/blog/blob/master/src/css/index.css) in plain old CSS, but it's mostly Skeleton. Dig those light blue links.
+I am using [Skeleton](http://getskeleton.com/) for the boilerplate and responsiveness. It's simple, lightweight, and works but is no longer maintained as far as I can tell. I do some [very minor overrides](https://github.com/marknotfound/blog/blob/master/src/css/index.css) in plain old CSS, but it's mostly Skeleton. Dig those light blue links.
+
+##### Icons
+Icons are open source from [Feather Icons](https://feathericons.com/).
 
 ##### Build & Deploy
 The build and deploy process is automated [using GitHub Actions](https://github.com/marknotfound/blog/blob/master/.github/workflows/eleventy_build.yml) and once again I am standing on the shoulders of a great community. I followed [this guide on LinkedIn](https://www.linkedin.com/pulse/eleventy-github-pages-lea-tortay/) from [Léa Tortay](https://github.com/lea37) to get it set up. Thanks Léa!
 
 ##### Analytics
 Because I want to know if anybody is actually reading this and I don't want to sacrifice anyone's privacy for my own selfish curiosity, I am using [Panelbear](https://panelbear.com/) for analytics. It's privacy focused and doesn't use tracking cookies or garbage like that. It's created by [Anthony Simon](https://anthonynsimon.com/) who I learned about via their very very good blog post [The Architecture Behind A One-Person Tech Startup](https://anthonynsimon.com/blog/one-man-saas-architecture/).
+
+##### Changelog
+**2021-05-12** Added citation for icon library. Noted Skeleton is no longer maintained.
