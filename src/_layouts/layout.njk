@@ -1,5 +1,6 @@
 ---
 title: marknotfound | the blog
+description: Thoughts from Mark on whatever his brain is currently obsessing over. Usually tech, running, and photography.
 ---
 
 <!doctype html>
@@ -7,6 +8,14 @@ title: marknotfound | the blog
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ description or renderData.description }}" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="{{ title or renderData.title or metadata.title }}" />
+    <meta property="og:url" content="{{ page.url }}" />
+    <meta property="og:description" content="{{description or renderData.description}}" />
+    <meta property="og:image" content="{{ '/img/logo.png' | url }}" />
+    <meta property="og:type" content="article" />
+    <link rel="canonical" href="{{ page.url }}" />
     <link rel="stylesheet" href="{{ '/css/normalize.css' | url }}">
     <link rel="stylesheet" href="{{ '/css/skeleton.css' | url }}">
     <link rel="stylesheet" href="{{ '/css/index.css' | url }}">

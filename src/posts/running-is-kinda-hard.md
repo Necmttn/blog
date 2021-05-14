@@ -2,8 +2,9 @@
 tags:
   - posts
   - fitness
-title: Running is Kinda Hard
 date: 2021-04-27
+title: Running is Kinda Hard
+description: In elementary school gym class they used to make us run a half mile from the middle of a big field around a baseball field backstop, then around a tree stump some distance away and back again. It wasn't fun and I was miserable every time we did it and I've hated running since. I've always been more of a wheels guy — skateboarding, biking, and roller/ice hockey. For whatever reason, I started running at the beginning of March 2021 - a year into the pandemic.
 ---
 In elementary school gym class they used to make us run a half mile from the middle of a big field around a baseball field backstop, then around a tree stump some distance away and back again. It wasn't fun and I was miserable every time we did it and I've hated running since. I've always been more of a wheels guy — skateboarding, biking, and roller/ice hockey.
 
