@@ -3,8 +3,9 @@ tags:
   - posts
   - tech
   - meta
-title: Enter the ~Blogosphere~
 date: 2021-04-24
+title: Enter the ~Blogosphere~
+description: I've got hobbies and dang it I'm gonna write about 'em. Since the pandemic began, I've gotten into all sorts of weird shit that I never thought I'd be into. Running, blockchain tech, impromptu road trips, and now blogging. You're gonna hear about all of it here, but first let's do the obligatory "blog tech" post.
 ---
 I've got hobbies and dang it I'm gonna write about 'em. Since the pandemic began, I've gotten into all sorts of weird shit that I never thought I'd be into. Running, blockchain tech, impromptu road trips, and now blogging. You're gonna hear about all of it here, but first let's do the obligatory "blog tech" post.<!-- excerpt -->
 ##### Open Source
