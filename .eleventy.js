@@ -44,13 +44,11 @@ module.exports = (eleventyConfig) => {
     excerpt_separator: "<!-- excerpt -->",
   });
 
+  eleventyConfig.addPassthroughCopy('src/img');
   eleventyConfig.setTemplateFormats([
     'md',
     'njk',
     'css',
-    'jpg',
-    'png',
-    'svg',
   ]);
 
   return {
