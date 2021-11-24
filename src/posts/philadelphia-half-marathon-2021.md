@@ -6,7 +6,7 @@ date: 2021-11-24
 title: "Race Report: Philadelphia Half Marathon 2021"
 description: The last time I wrote about running was seven months ago in April 2021. I had only been running for about eight weeks at that point. My longest run back then was 6.57 miles at a pace of 10:48 min/mile and I'm not even sure I ran the whole thing. Still, I was proud of that and still am!
 ---
-The last time I wrote about running was seven months ago in April 2021. I had only been running for about eight weeks at that point. My longest run back then was 6.57 miles at a pace of 10:48 min/mile and I'm not even sure I ran the whole thing. Still, I was proud of that and still am! I ran pretty regularly three times a week until July when I went on a five week road trip to Seattle and back (I should write about that next). Turns out running while driving across the country, camping, and staying in the odd La Quinta Inn is tough to maintain.<!-- excerpt -->
+[The last time I wrote about running was seven months ago in April 2021.](/posts/running-is-kinda-hard/) I had only been running for about eight weeks at that point. My longest run back then was 6.57 miles at a pace of 10:48 min/mile and I'm not even sure I ran the whole thing. Still, I was proud of that and still am! I ran pretty regularly three times a week until July when I went on a five week road trip to Seattle and back (I should write about that next). Turns out running while driving across the country, camping, and staying in the odd La Quinta Inn is tough to maintain.<!-- excerpt -->
 
 <img class="post-image" alt="Mark holds up his first half marathon medal in Philadelphia" src="{{ '/img/posts/running/philly-hm-2021.jpg' | url }}" />
 
