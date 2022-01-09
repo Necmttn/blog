@@ -1,35 +1,37 @@
-const { format } = require('date-fns');
-const markdownIt = require('markdown-it');
-const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
+const { format } = require("date-fns");
+const markdownIt = require("markdown-it");
+const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+const pluginRss = require("@11ty/eleventy-plugin-rss");
 
 module.exports = (eleventyConfig) => {
   // Plugins
   eleventyConfig.addPlugin(syntaxHighlight);
+  eleventyConfig.addPlugin(pluginRss);
 
   // Passthroughs
-  eleventyConfig.addPassthroughCopy('img');
-  eleventyConfig.addPassthroughCopy('css');
+  eleventyConfig.addPassthroughCopy("img");
+  eleventyConfig.addPassthroughCopy("css");
 
   // Filters
-  eleventyConfig.addFilter('md', (content = "") => {
+  eleventyConfig.addFilter("md", (content = "") => {
     return markdownIt({ html: true }).render(content);
   });
 
-  eleventyConfig.addFilter('readableDate', date => {
-    if (!date) return 'No Date';
+  eleventyConfig.addFilter("readableDate", date => {
+    if (!date) return "No Date";
     const offsetSeconds = date.getTimezoneOffset() * 60 * 1000;
     const utcTimestamp = date.getTime() + offsetSeconds;
     const utcDate = new Date(utcTimestamp);
 
-    return format(utcDate, 'EEEE MMMM d, yyyy');
+    return format(utcDate, "EEEE MMMM d, yyyy");
   });
 
   // Collections
-  eleventyConfig.addCollection('tagList', collection => {
+  eleventyConfig.addCollection("tagList", collection => {
     const tags = new Set();
     const hiddenTags = [
-      'posts',
-      'meta',
+      "posts",
+      "meta",
     ];
 
     collection.getAll().map(item => {
@@ -44,18 +46,18 @@ module.exports = (eleventyConfig) => {
     excerpt_separator: "<!-- excerpt -->",
   });
 
-  eleventyConfig.addPassthroughCopy('src/img');
+  eleventyConfig.addPassthroughCopy("src/img");
   eleventyConfig.setTemplateFormats([
-    'md',
-    'njk',
-    'css',
+    "md",
+    "njk",
+    "css",
   ]);
 
   return {
     passthroughFileCopy: true,
     dir: {
-      input: 'src',
-      layouts: '_layouts',
+      input: "src",
+      layouts: "_layouts",
     },
   };
 }
