@@ -88,6 +88,10 @@ img.avatar {
 
 .social-container a { margin-bottom: 16px; }
 .avatar-column-footer { margin-bottom: 16px; }
+.avatar-column-footer a {
+  text-align:center;
+  display: block;
+}
 
 .tag-list { display: none; }
 .tag-item { display: inline; }

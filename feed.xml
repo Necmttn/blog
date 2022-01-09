@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>marknotfound | the blog</title>
+  <subtitle>Thoughts from Mark on whatever his brain is currently obsessing over. Usually tech, running, and photography.</subtitle>
+  <link href="https://marknotfound.com/feed.xml" rel="self"/>
+  <link href="https://marknotfound.com/"/>
+  <updated>2021-11-24T00:00:00Z</updated>
+  <id>https://marknotfound.com/</id>
+  <author>
+    <name>Mark Evans</name>
+    <email>mark@meltdownlabs.com</email>
+  </author>
+  
+  <entry>
+    <title>Enter the ~Blogosphere~</title>
+    <link href="https://marknotfound.com/posts/enter-the-blogosphere/"/>
+    <updated>2021-04-24T00:00:00Z</updated>
+    <id>https://marknotfound.com/posts/enter-the-blogosphere/</id>
+    <content type="html">&lt;p&gt;I&#39;ve got hobbies and dang it I&#39;m gonna write about &#39;em. Since the pandemic began, I&#39;ve gotten into all sorts of weird shit that I never thought I&#39;d be into. Running, blockchain tech, impromptu road trips, and now blogging. You&#39;re gonna hear about all of it here, but first let&#39;s do the obligatory &amp;quot;blog tech&amp;quot; post.&lt;/p&gt;
+&lt;h5&gt;Open Source&lt;/h5&gt;
+&lt;p&gt;It&#39;s all open source. &lt;a href=&quot;https://github.com/marknotfound/blog&quot;&gt;View the repository on GitHub.&lt;/a&gt;&lt;/p&gt;
+&lt;h5&gt;Hosting&lt;/h5&gt;
+&lt;p&gt;This blog is hosted by &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt; because I didn&#39;t want to pay for EC2 or set up a kubernetes cluster. I don&#39;t hate myself enough for that.&lt;/p&gt;
+&lt;h5&gt;Static Site Generator&lt;/h5&gt;
+&lt;p&gt;I&#39;m running &lt;a href=&quot;https://www.11ty.dev/&quot;&gt;Eleventy&lt;/a&gt; for the whole shebang. Templates are written in &lt;a href=&quot;https://mozilla.github.io/nunjucks/&quot;&gt;Nunjucks&lt;/a&gt; which, to be honest, I don&#39;t care for much as a templating language, but it&#39;s the default for Eleventy and I wanted to start simple. It&#39;s growing on me a little as I use it more.&lt;/p&gt;
+&lt;p&gt;Posts are written in markdown. This is good because it will force me to use markdown and eventually I&#39;ll memorize the syntax for inserting an image.&lt;/p&gt;
+&lt;p&gt;Eleventy itself has been pretty cool. It was recommended to me last year by my old colleague &lt;a href=&quot;https://twitter.com/kai_cataldo&quot;&gt;Kai&lt;/a&gt;. I haven&#39;t dove too deep in yet, but the community seems nice and there are plenty of plugins for more advanced features like RSS and such. The last SSG I used was Jekyll, but I was never a fan of Ruby and it never &amp;quot;felt good&amp;quot; to me.&lt;/p&gt;
+&lt;p&gt;The biggest gotcha with Eleventy for me was the &lt;a href=&quot;https://www.11ty.dev/docs/dates/#dates-off-by-one-day&quot;&gt;dates being off by one day&lt;/a&gt;. I solved this by fudging the local time and offsetting it by the UTC offset:&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;eleventyConfig&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;addFilter&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;readableDate&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token parameter&quot;&gt;date&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;br /&gt;  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; offsetSeconds &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; date&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getTimezoneOffset&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;60&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br /&gt;  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; utcTimestamp &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; date&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getTime&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; offsetSeconds&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br /&gt;  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; utcDate &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;utcTimestamp&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br /&gt;&lt;br /&gt;  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;utcDate&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;EEEE MMMM d, yyyy&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br /&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There is almost definitely a &amp;quot;better&amp;quot; way to do this. Oh, and the syntax highlighting? &lt;a href=&quot;https://www.11ty.dev/docs/plugins/syntaxhighlight/&quot;&gt;There&#39;s a plugin for that&lt;/a&gt;.&lt;/p&gt;
+&lt;h5&gt;Styling&lt;/h5&gt;
+&lt;p&gt;I am using &lt;a href=&quot;http://getskeleton.com/&quot;&gt;Skeleton&lt;/a&gt; for the boilerplate and responsiveness. It&#39;s simple, lightweight, and works but is no longer maintained as far as I can tell. I do some &lt;a href=&quot;https://github.com/marknotfound/blog/blob/master/src/css/index.css&quot;&gt;very minor overrides&lt;/a&gt; in plain old CSS, but it&#39;s mostly Skeleton. Dig those light blue links.&lt;/p&gt;
+&lt;h5&gt;Icons&lt;/h5&gt;
+&lt;p&gt;Icons are open source from &lt;a href=&quot;https://feathericons.com/&quot;&gt;Feather Icons&lt;/a&gt;.&lt;/p&gt;
+&lt;h5&gt;Build &amp;amp; Deploy&lt;/h5&gt;
+&lt;p&gt;The build and deploy process is automated &lt;a href=&quot;https://github.com/marknotfound/blog/blob/master/.github/workflows/eleventy_build.yml&quot;&gt;using GitHub Actions&lt;/a&gt; and once again I am standing on the shoulders of a great community. I followed &lt;a href=&quot;https://www.linkedin.com/pulse/eleventy-github-pages-lea-tortay/&quot;&gt;this guide on LinkedIn&lt;/a&gt; from &lt;a href=&quot;https://github.com/lea37&quot;&gt;Léa Tortay&lt;/a&gt; to get it set up. Thanks Léa!&lt;/p&gt;
+&lt;h5&gt;Analytics&lt;/h5&gt;
+&lt;p&gt;Because I want to know if anybody is actually reading this and I don&#39;t want to sacrifice anyone&#39;s privacy for my own selfish curiosity, I am using &lt;a href=&quot;https://panelbear.com/&quot;&gt;Panelbear&lt;/a&gt; for analytics. It&#39;s privacy focused and doesn&#39;t use tracking cookies or garbage like that. It&#39;s created by &lt;a href=&quot;https://anthonynsimon.com/&quot;&gt;Anthony Simon&lt;/a&gt; who I learned about via their very very good blog post &lt;a href=&quot;https://anthonynsimon.com/blog/one-man-saas-architecture/&quot;&gt;The Architecture Behind A One-Person Tech Startup&lt;/a&gt;.&lt;/p&gt;
+&lt;h5&gt;Changelog&lt;/h5&gt;
+&lt;p&gt;&lt;strong&gt;2021-05-12&lt;/strong&gt; Added citation for icon library. Noted Skeleton is no longer maintained.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Running is Kinda Hard</title>
+    <link href="https://marknotfound.com/posts/running-is-kinda-hard/"/>
+    <updated>2021-04-27T00:00:00Z</updated>
+    <id>https://marknotfound.com/posts/running-is-kinda-hard/</id>
+    <content type="html">&lt;p&gt;In elementary school gym class they used to make us run a half mile from the middle of a big field around a baseball field backstop, then around a tree stump some distance away and back again. It wasn&#39;t fun and I was miserable every time we did it and I&#39;ve hated running since. I&#39;ve always been more of a wheels guy — skateboarding, biking, and roller/ice hockey.&lt;/p&gt;
+&lt;p&gt;For whatever reason, I started running at the beginning of March 2021 - a year into the pandemic. Some part of me realized if I don&#39;t make a choice to be healthier, I&#39;d just always feel like garbage. I turned 30 this year and don&#39;t want to get old and fat. I want to be able to run around and play with my nieces for years to come. So I set a goal of a sub-30 minute 5K. Runner friends told me that would be a good milestone to work toward. I hit that goal in just 8 weeks following a training program on my Garmin watch.&lt;/p&gt;
+&lt;p&gt;For context, I wasn&#39;t a fit guy at the start of this (and still am not). I&#39;m 5&#39;11&amp;quot; and was about 204 lbs when I started running. Below is a timeline of what it was like going from nothing to 5K and beyond.&lt;/p&gt;
+&lt;h5&gt;Garmin Coach&lt;/h5&gt;
+&lt;p&gt;Because I have a Garmin Instinct watch that I got for hiking a couple years ago, I&#39;m using the &lt;a href=&quot;https://connect.garmin.com/features/coach/&quot;&gt;Garmin Coach 5K plan with Coach Jeff Galloway&lt;/a&gt;. It&#39;s a 14 week plan with drills and it adjusts the workouts based on the progress you&#39;re making. At the time of writing this, I&#39;m on week 9.&lt;/p&gt;
+&lt;h5&gt;First Run - March 8, 2021&lt;/h5&gt;
+&lt;img class=&quot;post-image&quot; src=&quot;https://marknotfound.com/img/posts/running/benchmark-run.jpg&quot; /&gt;
+&lt;p&gt;This was the training program&#39;s benchmark run on which the plan bases the rest of your workouts. The workout was to warmup/walk for 2 minutes, run best as possible for 5 minutes, and then cool down (walk) for 2 minutes. I got about half a mile in 10 minutes 52 seconds (nearly 20 minute/mile pace) with a combination of walking and running. I walked a lot and remember being unsure if this was going to stick.&lt;/p&gt;
+&lt;h5&gt;Third Run - March 12, 2021&lt;/h5&gt;
+&lt;p&gt;The goal for this workout was 5 minute walking warmup, followed by 1.5 miles run/walk/run. Run/walk/run is what it sounds like - you just run, walking as needed to catch your breath. I did 2.3 miles in about 32 minutes with an almost 14 minute/mile average pace. I remember these earlier runs being really hard and being pretty proud of hitting 2 miles on just my third run.&lt;/p&gt;
+&lt;h5&gt;My Bones Hurt&lt;/h5&gt;
+&lt;p&gt;The first couple weeks, my body wasn&#39;t used to the impact of running. My knees, ankles, and feet were not fully recovering before the next run. They weren&#39;t killing me though and I deemed the pain to be a &amp;quot;normal amount&amp;quot; so I powered through. After maybe the second or third week my body adjusted and I would recover in a day, just in time for the next run. Now, 9 weeks in I&#39;m not sore at all (which means I need to start pushing myself further again).&lt;/p&gt;
+&lt;h5&gt;First 5K - March 17, 2021&lt;/h5&gt;
+&lt;p&gt;I hit 3.1+ miles on my 5th run with combo of walking and running. It was cool, but I wasn&#39;t very happy with it because I&#39;d walked so much. 3.5 miles in 40 minutes, average pace 11:15. In hindsight, this was a milestone and I should be less hard on myself. Just needed to get my pace a minute fifteen faster to hit my first goal.&lt;/p&gt;
+&lt;h5&gt;Cheat Code for Asthmatics&lt;/h5&gt;
+&lt;p&gt;I realized around this time that if I took a couple hits of my inhaler before a run, I&#39;d have more endurance because I guess I was breathing more efficiently. Just a little tip for the other wheezers out there.&lt;/p&gt;
+&lt;h5&gt;Personal Bests - April 2, 2021&lt;/h5&gt;
+&lt;p&gt;Broke my personal best distance here which I remember feeling great. Man I wish I&#39;d been writing this stuff down while it was happening. 4.58 miles in 53 minutes 54 seconds with an 11:47 pace. Slow pace for sure, but the longest run by a mile so far!&lt;/p&gt;
+&lt;h5&gt;First 10K - April 16, 2021&lt;/h5&gt;
+&lt;img class=&quot;post-image&quot; src=&quot;https://marknotfound.com/img/posts/running/10k-run.jpg&quot; /&gt;
+&lt;p&gt;Exactly two weeks after feeling like 4.58 miles was an eternity, I broke my distance record again with a 10K running 6.57 miles in 1 hour 11 minutes 4 seconds at a pace of 10:48. I also set my best 5K time here at 31 minutes 4 seconds! Getting real close to the actual goal here (5k &amp;lt; 30 minutes)! I think I experienced my first actual runner&#39;s high after this one. I cried for like 30 minutes afterwards and couldn&#39;t understand why. Felt good though!&lt;/p&gt;
+&lt;h5&gt;Blaze It - April 20, 2021&lt;/h5&gt;
+&lt;img class=&quot;post-image&quot; src=&quot;https://marknotfound.com/img/posts/running/30min-5k.jpg&quot; /&gt;
+&lt;p&gt;I ran 5K in 29 minutes 53 seconds hitting my goal with a pace of 9:57! Hell yeah!!! This felt good, but not as good as the 10K which... scares me because now I fear I&#39;m going to start craving longer distances to chase that high.&lt;/p&gt;
+&lt;h5&gt;Weight Loss&lt;/h5&gt;
+&lt;p&gt;Something about exercising regularly (which I&#39;ve not been accustomed to) makes you want to eat better so you don&#39;t feel like you&#39;re wasting your effort. I still eat trash once or twice a week, but on average I&#39;m eating much healthier and as a result of the exercise/diet have lost about 7 lbs.&lt;/p&gt;
+&lt;h5&gt;Next Goals - Current&lt;/h5&gt;
+&lt;p&gt;I&#39;m hitting a 5K distance at least 3 days a week now. It&#39;s just my go-to run distance. I think I&#39;m going to keep training to work up to a half marathon next. I&#39;m doing another 10K this Friday, April 30th. I&#39;m not worried so much about beating my time since 10K doesn&#39;t feel &amp;quot;comfortable&amp;quot; yet, but it would be nice.&lt;/p&gt;
+&lt;p&gt;I&#39;m learning a lot about hydration and food as fuel. For example I learned the hard way that you can over hydrate before a run and then have cramps and be in pain for three and a half miles. Similarly, you shouldn&#39;t eat Taco Bell before a run - with any amount of buffer. I thought 4 hours would be enough time, but the gordita burps said otherwise.&lt;/p&gt;
+&lt;p&gt;Will definitely be posting more about running and specific bits of it now that this catch-up post is done. Still not sure if I &amp;quot;like&amp;quot; running, but I do like the feeling of personal growth it&#39;s giving me. I&#39;ve got an appointment this week to get fitted for new shoes/insoles so maybe I&#39;ll write about that process next!&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Chia Network Plotting &amp; Farming</title>
+    <link href="https://marknotfound.com/posts/chia-plotting-and-farming/"/>
+    <updated>2021-05-12T00:00:00Z</updated>
+    <id>https://marknotfound.com/posts/chia-plotting-and-farming/</id>
+    <content type="html">&lt;p&gt;&lt;a href=&quot;https://www.chia.net/&quot;&gt;Chia Network&lt;/a&gt; is a newer blockchain and smart transaction platform that aims to be greener, more efficient, and more secure than Bitcoin and Ethereum. It is founded by Brahm Cohen, the inventor of the BitTorrent network. The project is still young - mainnet launched just seven weeks ago on March 19, 2021. Instead of using specialized hardware to &amp;quot;mine&amp;quot; as in Bitcoin or Ethereum, excess storage space is put to work to &amp;quot;farm&amp;quot;. In this post I&#39;ll share some of my thoughts since I started farming Chia.&lt;/p&gt;
+&lt;h4&gt;How is Chia different?&lt;/h4&gt;
+&lt;p&gt;Bitcoin and Ethereum use a consensus mechanism called Proof of Work (PoW) while Chia uses Proof of Space and Time, which basically means it utilizes excess storage space rather than specialized hardware like GPUs or ASICs. I won&#39;t get too into the details of explaining Chia - they do a fine job of it on their &lt;a href=&quot;https://www.chia.net/faq/&quot;&gt;FAQ&lt;/a&gt; and &lt;a href=&quot;https://www.chia.net/greenpaper/&quot;&gt;Green Paper&lt;/a&gt;.&lt;/p&gt;
+&lt;h4&gt;The Basics&lt;/h4&gt;
+&lt;p&gt;There are two main components to farming Chia - plotting and farming. Plotting is the act of creating plots which are files that are harvested when farming. Again, I won&#39;t get into the details since you can read about those on Chia&#39;s website if you&#39;re interested. Basically plots take time + resources to create, and more plots equals more opportunities to win a block and thus earn the block reward of 2 &lt;a href=&quot;https://www.coingecko.com/en/coins/chia&quot;&gt;XCH&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Farming is simply the act of listening to challenges broadcast by the blockchain and checking the plots for a solution, thus farming is extremely light on energy consumption. You can easily farm using a Raspberry Pi.&lt;/p&gt;
+&lt;h4&gt;My Setup&lt;/h4&gt;
+&lt;p&gt;I&#39;ve adapted my gaming PC to plot more efficiently, and am using external drives to hold the plots. My plotting/gaming PC&#39;s specs are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CPU&lt;/strong&gt;: AMD Ryzen 7 3700X 8C16T&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Boot Drive&lt;/strong&gt;: Samsung 970 EVO PLUS M.2 1TB&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Plot Drive&lt;/strong&gt;: Intel S4610 960GB Enterprise SSD&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Farm Drives&lt;/strong&gt;: Assorted externals totaling ~20TB&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory&lt;/strong&gt;: G.SKILL Ripjaws V 2x16GB&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PSU&lt;/strong&gt;: EVGA SuperNOVA 850 G+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GPU&lt;/strong&gt;: Radeon RX 580 (Not relevant for Chia)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Performance&lt;/h4&gt;
+&lt;p&gt;Plotting under Windows 10 as I&#39;m doing suffers ~10% slower plotting times. Still, with this rig I can get about four plots running in parallel staggering them at about 360 minutes (6 hours). With this offset strategy, I can pump out about 2 plots every six hours or so with two queues plotting onto the Intel S4610 SSD. I&#39;ve found 4GB of RAM and 3 CPU threads per plot works well enough for now with this setup.&lt;/p&gt;
+&lt;h4&gt;Future Improvements&lt;/h4&gt;
+&lt;h5&gt;Storage&lt;/h5&gt;
+&lt;p&gt;I&#39;ve just ordered a new 1TB SSD which will replace the M.2 drive as my boot drive. I&#39;ll dual boot Windows/Ubuntu on the SSD and start plotting to the M.2. The Samsung 970 EVO doesn&#39;t have the highest endurance however so it will eventually fail. Until then I should be able to almost double my plot output.&lt;/p&gt;
+&lt;h5&gt;Raspberry Pi Farm&lt;/h5&gt;
+&lt;p&gt;I have a Raspberry Pi 4 ready to be set up as a dedicated farmer. This will lower power consumption as I won&#39;t have to run my PC full time once plots are completed. The RPi 4 has four USB ports, so I&#39;ll be able to connect at least 4 external drives to it as farm storage, but may also boost that number with USB splitters.&lt;/p&gt;
+&lt;h5&gt;Linux&lt;/h5&gt;
+&lt;p&gt;As mentioned, Windows is slower to plot than Linux/MacOS, so I&#39;ll be installing Ubuntu on a partition and plotting there. I&#39;ve not done much scientific benchmarking, but once I cut over to Linux I&#39;ll likely set up some more monitoring around things to better understand what is working and what isn&#39;t.&lt;/p&gt;
+&lt;h5&gt;Staging Drive&lt;/h5&gt;
+&lt;p&gt;Because the farm drives are slow spinning disks, transferring plots to them is slow. Each plot is 108.8GB so takes 20+ minutes just to transfer the plot once it&#39;s done being created on the plot drive. To unblock the plot drives, I plan to install a cheap SSD where plots will be copied to once they&#39;re complete. Then I&#39;ll set up a job to move them from staging to their final destination on the slow farm drives.&lt;/p&gt;
+&lt;h4&gt;Return on Investment&lt;/h4&gt;
+&lt;p&gt;Some people are investing tens of thousands of dollars in their plotting rigs. Who knows - maybe they will recoup that cost. I already had the gaming PC, so the only investment I made was two drives - an enterprise SSD for plotting and a 14TB external for farming. This amounts to ~$400 total which I have already made back after three weeks of farming. Of couse, not every farmer is as lucky. People on Reddit are regularly posting pictures of their several hundred plot farms where they haven&#39;t won a single block. I am hesitant to invest too deeply, so for now I will just keep plotting with what I have.&lt;/p&gt;
+&lt;h4&gt;Random Thoughts&lt;/h4&gt;
+&lt;p&gt;It&#39;s been a fun experiment playing with Chia. I&#39;ve never mined a cryptocurrency before, and this one appealed to me because I didn&#39;t need any specialized hardware. Any hardware I decide to purchase for farming Chia in the future can easily be repurposed for other things should I decide to stop farming. More storage is always handy.&lt;/p&gt;
+&lt;p&gt;Chia&#39;s also pushed me into the &lt;a href=&quot;https://www.reddit.com/r/homelab/&quot;&gt;Homelab subreddit&lt;/a&gt; which is super interesting and has me considering a home server for running Docker and other services in my own cloud.&lt;/p&gt;
+&lt;p&gt;More to come another day :)&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Race Report: Philadelphia Half Marathon 2021</title>
+    <link href="https://marknotfound.com/posts/philadelphia-half-marathon-2021/"/>
+    <updated>2021-11-24T00:00:00Z</updated>
+    <id>https://marknotfound.com/posts/philadelphia-half-marathon-2021/</id>
+    <content type="html">&lt;p&gt;&lt;a href=&quot;https://marknotfound.com/posts/running-is-kinda-hard/&quot;&gt;The last time I wrote about running was seven months ago in April 2021.&lt;/a&gt; I had only been running for about eight weeks at that point. My longest run back then was 6.57 miles at a pace of 10:48 min/mile and I&#39;m not even sure I ran the whole thing. Still, I was proud of that and still am! I ran pretty regularly three times a week until July when I went on a five week road trip to Seattle and back (I should write about that next). Turns out running while driving across the country, camping, and staying in the odd La Quinta Inn is tough to maintain.&lt;/p&gt;
+&lt;img class=&quot;post-image&quot; alt=&quot;Mark holds up his first half marathon medal in Philadelphia&quot; src=&quot;https://marknotfound.com/img/posts/running/philly-hm-2021.jpg&quot; /&gt;
+&lt;p&gt;Once I returned from the road trip it was time to get back on the running train, but this time I was going to take it more seriously.&lt;/p&gt;
+&lt;p&gt;I signed up for the JCRR Everybody&#39;s 10k in October, loaded up a new Garmin coach training plan, and got to work. My running schedule was four days a week this time, up from three. Cut to 12 weeks of &amp;quot;easy&amp;quot; runs and speed training and I ran that 10k at 54:22 - well under the goal I had set for sub-60 minutes. But this race report isn&#39;t about that race - it&#39;s about the Philadelphia Half Marathon.&lt;/p&gt;
+&lt;p&gt;At Everybody&#39;s 10k, I ended up pacing behind a group of people that I later learned ran with a group called Jersey City Runners (not to be confused with Jersey City &lt;strong&gt;Road&lt;/strong&gt; Runners, the hosts of the race). I had joined the JCR group on Facebook a couple weeks back so I was familiar, but I hadn&#39;t talked with anybody or joined any of their group runs yet for fear I wouldn&#39;t be able to keep up.&lt;/p&gt;
+&lt;p&gt;After introducing myself to my unwitting pacers and thanking them, I decided to start signing up for the JCR group runs. Long story short, JCR is amazing and the people in that group have pushed me beyond whatever limits I thought I had. Now I run with them four days a week and I can&#39;t even imagine going back to running solo 😂. Because of them, I signed up for the Philadelphia Half Marathon with just two weeks notice. I knew I had nothing to worry about though - a solid group of JCR friends would be by my side in the half, and others were running in the full. In fact, I ran the half with the same group of people I ran the 10k with!&lt;/p&gt;
+&lt;p&gt;The below race report is duplicated from my post on Reddit, so please ignore any repeated info:&lt;/p&gt;
+&lt;h3&gt;Race Information&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Name:&lt;/strong&gt; Philadelphia Half Marathon&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; November 20, 2021&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Distance:&lt;/strong&gt; 13.1 miles&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Location:&lt;/strong&gt; Philadelphia, PA&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Strava:&lt;/strong&gt; https://www.strava.com/activities/6283464189&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Website:&lt;/strong&gt; https://www.philadelphiamarathon.com/races/half-marathon/&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time (Official):&lt;/strong&gt; 1:55:47&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time (Strava):&lt;/strong&gt; 1:54:34&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Goals&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Goal&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;th&gt;Completed?&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;A&lt;/td&gt;
+&lt;td&gt;Finish and have a nice time&lt;/td&gt;
+&lt;td&gt;&lt;em&gt;Yes&lt;/em&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;B&lt;/td&gt;
+&lt;td&gt;Sub 2:00:00&lt;/td&gt;
+&lt;td&gt;&lt;em&gt;Yes&lt;/em&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;C&lt;/td&gt;
+&lt;td&gt;Sub 1:55:00&lt;/td&gt;
+&lt;td&gt;&lt;em&gt;Officially no, Strava says yes though ;)&lt;/em&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3&gt;Splits&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Mile&lt;/th&gt;
+&lt;th&gt;Pace&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;9:14&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;8:04&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;8:44&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;8:50&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;8:41&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;8:41&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;8:29&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;td&gt;8:38&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;9&lt;/td&gt;
+&lt;td&gt;8:55&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;9:10&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;9:02&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;12&lt;/td&gt;
+&lt;td&gt;8:44&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;13&lt;/td&gt;
+&lt;td&gt;8:31&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;0.26 (Didn&#39;t stop my watch perfectly)&lt;/td&gt;
+&lt;td&gt;8:28&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3&gt;Training&lt;/h3&gt;
+&lt;p&gt;No training specific to this event. I only signed up two weeks beforehand because there were a bunch of people from my club running in either the half or full. This was my first half marathon race and only my third race ever since starting running from nothing in March 2021. Weekly sessions were basically 3-4 easy-ish runs per week plus one long run. My weekly mileage is 30-35. I initially wasn&#39;t going to set any time goals on this race, but then the week before the race I ended up doing 13.5 miles on my long run in about 2h 20m very casually so figured getting under 2 hours should be attainable if actually trying.&lt;/p&gt;
+&lt;h3&gt;Pre-race&lt;/h3&gt;
+&lt;p&gt;Got to Philly early Friday morning. I work remote so finished my work day in the hotel room. I&#39;ve been battling PTT (posterior tibial tendonitis) so taped my legs with KT tape as my PT recommended for this race. Wow! I didn&#39;t think KT tape actually worked but it was like magic. I&#39;m okay if it was just a placebo, but I literally felt none of the pain I normally feel once I had this tape on. It was a miracle. Days later the pain has not resurfaced.&lt;/p&gt;
+&lt;p&gt;Woke up for the race Saturday at 5am. Got dressed and did a bunch of stretches. Met with fellow club runners in the lobby at 6am and walked to the race. Got through security quickly without much hassle. Hit the bathroom quick, took a pre-race gel, then into the corral.&lt;/p&gt;
+&lt;p&gt;It was pretty cold. I didn&#39;t bring throwaway clothes and it didn&#39;t help that the race started a little over 30 minutes late. I had on wool socks, thermal tights, two long sleeve shirts, one short sleeve shirt, gloves, and a hat. It wasn&#39;t until mile 3 that I was finally warmed up and I could feel my feet again.&lt;/p&gt;
+&lt;h3&gt;Race&lt;/h3&gt;
+&lt;p&gt;No real strategy going in. I remember telling myself I would start off slow and try to get negative splits.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Miles 1-6&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Negative split plan immediately went out the window, and I accidentally ran my second mile way too fast at an 8:04 pace. I was happy to have banked some time though and was feeling strong. I popped a gel every 3 miles. This is more often than most people I know, but it works well for me and prevents headaches I sometimes get at the end of a run.&lt;/p&gt;
+&lt;p&gt;I didn&#39;t check the course map really so was pretty surprised by the rolling hills starting around mile 4. Whatever. I powered through and maintained a pace consistently faster than my target. I took full advantage of the downhills to recover letting gravity do the work.&lt;/p&gt;
+&lt;p&gt;Mile 6ish I saw a group friends from my local running club cheering. I yelled to them and they yelled/waved back and it felt good to get some free energy! Then another half mile down, I was surprised to see my girlfriend on the side cheering me on. She said she would meet me at the finish, so I was not expecting to see her until then. She gave me a huge boost of energy and my eyes teared up a little from the excitement 😍.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Miles 6-11&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;More hills and they felt like they were getting steeper. Still felt pretty strong and continued to power through them hitting some nice 8:30 and below miles here and there. Things got slower around 10 and 11 (9:05ish pace) when I started really feeling the hills.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Miles 11-13.1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Started suffering here - this was the fastest I had ever done a run this long and I was starting to feel it. The last mile in particular was a pretty steady incline which I didn&#39;t realize at the time. It just felt hard and I couldn&#39;t pinpoint why until I checked the elevation on Strava after. I recall grunting and groaning (ok and maybe cursing a little) just knowing it would be over soon and I only had to push a little longer to get to the finish.&lt;/p&gt;
+&lt;h3&gt;Post-race&lt;/h3&gt;
+&lt;p&gt;Finished strong and immediately got some food in me. A banana, two granola bars, liter of water with two Nuun tablets in it, etc. Checked Strava and saw I beat 1:55:00, then saw the official result telling me I actually did not beat 1:55:00. Overall I&#39;m happy with how things went down and I am proud of my performance. During this race I also set new PRs for the 5k (26:37) and 10k (53:18) distances which was a nice bonus.&lt;/p&gt;
+&lt;p&gt;I learned a lot about how the bigger races operate. Next time I&#39;ll be prepared with throw away clothes and more training. Immediately after the race I questioned if I wanted to keep doing races like this, but those nasty thoughts were gone in a couple hours when I started looking forward to the next time :)&lt;/p&gt;
+</content>
+  </entry>
+</feed>
