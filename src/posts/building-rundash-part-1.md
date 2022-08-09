@@ -1,7 +1,7 @@
 ---
 tags:
   - posts
-  - RunDash
+  - rundash
   - tech
 date: 2022-08-09
 title: Building RunDash - Part 1
