@@ -1,0 +1,130 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Over the last year, I&#39;ve had a lot of fun tracking my progress with Garmin Connect and Strava. They expose tons of data points about each run - pace, distance, heart rate, elevation gain, cadence, etc. These tools are amazing. Strava is a great social network where my friends and I can congratulate eachother after races or particularly grueling workouts. Garmin provides insights into how training is going. Who doesn&#39;t love seeing a chart with a positive trend?" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Building RunDash - Part 1" />
+    <meta property="og:url" content="/posts/building-rundash-part-1/" />
+    <meta property="og:description" content="Over the last year, I&#39;ve had a lot of fun tracking my progress with Garmin Connect and Strava. They expose tons of data points about each run - pace, distance, heart rate, elevation gain, cadence, etc. These tools are amazing. Strava is a great social network where my friends and I can congratulate eachother after races or particularly grueling workouts. Garmin provides insights into how training is going. Who doesn&#39;t love seeing a chart with a positive trend?" />
+    <meta property="og:image" content="/img/logo.png" />
+    <meta property="og:type" content="article" />
+    <link rel="canonical" href="/posts/building-rundash-part-1/" />
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism-tomorrow.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=VT323&display=swap" rel="stylesheet">
+    <title>Building RunDash - Part 1</title>
+    <!-- Panelbear Analytics - We respect your privacy -->
+    <script async src="https://cdn.panelbear.com/analytics.js?site=3eJLZ3UrT5q"></script>
+    <script>
+        window.panelbear = window.panelbear || function() { (window.panelbear.q = window.panelbear.q || []).push(arguments); };
+        panelbear('config', { site: '3eJLZ3UrT5q' });
+    </script>
+  </head>
+  <body>
+    <header class="header">
+      <h1>
+        <a href="/">marknotfound | the blog</a>
+      </h1>
+    </header>
+    <div class="container">
+      <div class="row">
+  <div class="three columns avatar-column">
+  <div class="avatar-container">
+    <a href="/">
+      <img class="avatar" src="/img/avatar.jpg" />
+    </a>
+  </div>
+  <p class="description">mark (he/him) is a software engineer, photographer, runner, and other things too sometimes.</p>
+  <div class="social-container">
+    <a href="mailto:mark@meltdownlabs.com">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </a>
+    <a href="https://github.com/marknotfound">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/markevansnj/">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+    </a>
+    <a href="https://instagram.com/jerseysights">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+    </a>
+  </div>
+  <div class="tag-list">
+  <ol>
+  
+    <li class="tag-item">
+      
+      <a href="/tags/rundash/">RunDash</a>
+    </li>
+  
+    <li class="tag-item">
+      
+      <a href="/tags/tech/">tech</a>
+    </li>
+  
+    <li class="tag-item">
+      
+      <a href="/tags/running/">running</a>
+    </li>
+  
+  </ol>
+</div>
+  <div class="avatar-column-footer">
+    <a href="/feed.xml">RSS</a>
+    <a href="https://github.com/marknotfound/blog">View source on GitHub</a>
+  </div>
+</div>
+  <div class="nine columns">
+    <span class="article-date">Monday August 8, 2022</span>
+    <h3 class="article-title">
+      <a href=".">Building RunDash - Part 1</a>
+    </h3>
+    <p>Over the last year, I've had a lot of fun tracking my progress with Garmin Connect and Strava. They expose tons of data points about each run - pace, distance, heart rate, elevation gain, cadence, etc. These tools are amazing. Strava is a great social network where my friends and I can congratulate eachother after races or particularly grueling workouts. Garmin provides insights into how training is going. Who doesn't love seeing a chart with a positive trend?</p>
+<p>However, I sometimes feel these platforms cater to an athlete who is more interested in min/maxing their performance through data insights. There is nothing wrong with this of course, but <em>I am not trying to compete at a high level.</em> If you are not interested in utilizing it, then too much data or too fine data is just noise. I'm a middle of the pack runner and perfectly content to hang out there. So which metrics - at a high level - show me how I'm improving? What I want is to quantitatively answer the questions:</p>
+<ul>
+<li>Am I running more often?</li>
+<li>Am I running longer?</li>
+<li>Am I running a little faster this year compared to last?</li>
+</ul>
+<p>While those questions are likely answerable with Garmin and Strava if you dig a little bit, I wanted something that put those insights right infront of my face. <a href="https://rundashapp.com/"><em>Enter RunDash</em></a>.</p>
+<h5>RunDash - A One Man Product (for now)</h5>
+<img class="post-image" src="/img/posts/rundash/bkm-22-dashboard.png" alt="A screenshot of RunDash displaying charts for a marathon training block" />
+<a href="https://rundashapp.com/">RunDash</a> aims to answer those questions very simply by displaying key metrics on a fixed set of charts. You can log in, glance at your data and log off. You can tag runs however you want and filter on those tags to see trends. I like to tag runs by training block. So I tagged all of my training runs for the 2022 Brooklyn Marathon as "BKM '22". Now I can filter the metrics by that tag and see how my training progressed for that specific block.
+<p>All of the data comes from Strava, which is the only way to log into the application.</p>
+<h5>Infrastructure</h5>
+<p>RunDash is hosted on Heroku. I've not really used Heroku before this for any sort of &quot;real&quot; project. People claim it is expensive, but it allows me to get started for free/cheap and is basically ops team as a service. After upgrading to all paid services (one web dyno, one worker dyno, postgres) the total cost is $24/month. That's cheap operations.</p>
+<p>For example, after opening signups to my local run club I quickly began to exceed the limits of the free postgres tier. Migrating to a paid postgres tier required less than 2 minutes of down time and running just a few CLI commands. Enter maintenance mode (provided by Heroku), create the new postgres instance, copy the data over, swap the new postgres credentials into an environment variable, leave maintenance mode. Very quick and easy.</p>
+<h5>Backend</h5>
+<p>The app is running on a familiar Django + gunicorn + celery + postgres stack. One of the goals of this project is to use and better learn Django best practices, so I am trying to take advantage of all it has to offer. Off the shelf authentication, templating system, unit testing tooling, etc.</p>
+<p>Heroku handles crons via their scheduler addon. Crons are implemented as Django management commands.</p>
+<p>Celery handles background tasks like importing activities from Strava or syncing up with incoming webhooks.</p>
+<h5>Frontend</h5>
+<p>While I'm perfectly capable of building a React app from scratch, I didn't want the complexity that comes with building/maintaining a React app. After all, this is (for now) a solo project. It doesn't make money (it loses exactly $24/month), so I want building it to spark some joy in my life. I learned about <a href="https://htmx.org/">HTMX</a> on Reddit and it seemed like an interesting tool. It's a very small JS library that lets you add HTML attributes to trigger XHR requests based on events. This means you can build a dynamic single page app <em>without writing any JS</em>. In fact, <em>there is zero custom JS in RunDash</em>. An event on the frontend triggers an API call and, instead of the server responding with JSON, it responds with an HTML fragment which HTMX then swaps into the DOM. It's lightweight, fast, and simple. <em>chef kiss</em> 👨‍🍳 More on HTMX in a follow up post.</p>
+<p>The UI is built with <a href="https://getbootstrap.com/">Bootstrap 5</a> and a simple <a href="https://bootswatch.com/yeti/">off the shelf theme</a>. In an effort to keep things simple and reduce complexity, <em>there is zero custom CSS</em>. With this self-imposed constraint the product and UI stays a little simpler. After all, I'm not a designer. To some degree, it is best to use what Booststrap prescribes. The theme is admittedly not the prettiest or most modern, so this will be the first thing to go if/when I get more resources 😂.</p>
+<h5>Charting</h5>
+<p>Charting is done using <a href="https://www.chartjs.org/">Chart.js</a>. Again one of the goals of this project is to keep it as simple as possible. Chart.js is very quick and easy to use. For now, it fits what the product sets out to do.</p>
+<h5>Up Next</h5>
+<p>I have more plans for RunDash and hope to eventually turn it into a microbusiness of sorts. I'm not sure what that means yet. Follow up posts will dive more into technical details, marketing, and business efforts.</p>
+
+    <div class="article-actions">
+      <a href="/">Go back</a>
+    </div>
+  </div>
+</div>
+    </div>
+    <footer></footer>
+  </body>
+</html>

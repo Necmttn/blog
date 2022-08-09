@@ -4,7 +4,7 @@
   <subtitle>Thoughts from Mark on whatever his brain is currently obsessing over. Usually tech, running, and photography.</subtitle>
   <link href="https://marknotfound.com/feed.xml" rel="self"/>
   <link href="https://marknotfound.com/"/>
-  <updated>2021-11-24T00:00:00Z</updated>
+  <updated>2022-08-08T00:00:00Z</updated>
   <id>https://marknotfound.com/</id>
   <author>
     <name>Mark Evans</name>
@@ -257,6 +257,40 @@
 &lt;h3&gt;Post-race&lt;/h3&gt;
 &lt;p&gt;Finished strong and immediately got some food in me. A banana, two granola bars, liter of water with two Nuun tablets in it, etc. Checked Strava and saw I beat 1:55:00, then saw the official result telling me I actually did not beat 1:55:00. Overall I&#39;m happy with how things went down and I am proud of my performance. During this race I also set new PRs for the 5k (26:37) and 10k (53:18) distances which was a nice bonus.&lt;/p&gt;
 &lt;p&gt;I learned a lot about how the bigger races operate. Next time I&#39;ll be prepared with throw away clothes and more training. Immediately after the race I questioned if I wanted to keep doing races like this, but those nasty thoughts were gone in a couple hours when I started looking forward to the next time :)&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Building RunDash - Part 1</title>
+    <link href="https://marknotfound.com/posts/building-rundash-part-1/"/>
+    <updated>2022-08-08T00:00:00Z</updated>
+    <id>https://marknotfound.com/posts/building-rundash-part-1/</id>
+    <content type="html">&lt;p&gt;Over the last year, I&#39;ve had a lot of fun tracking my progress with Garmin Connect and Strava. They expose tons of data points about each run - pace, distance, heart rate, elevation gain, cadence, etc. These tools are amazing. Strava is a great social network where my friends and I can congratulate eachother after races or particularly grueling workouts. Garmin provides insights into how training is going. Who doesn&#39;t love seeing a chart with a positive trend?&lt;/p&gt;
+&lt;p&gt;However, I sometimes feel these platforms cater to an athlete who is more interested in min/maxing their performance through data insights. There is nothing wrong with this of course, but &lt;em&gt;I am not trying to compete at a high level.&lt;/em&gt; If you are not interested in utilizing it, then too much data or too fine data is just noise. I&#39;m a middle of the pack runner and perfectly content to hang out there. So which metrics - at a high level - show me how I&#39;m improving? What I want is to quantitatively answer the questions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Am I running more often?&lt;/li&gt;
+&lt;li&gt;Am I running longer?&lt;/li&gt;
+&lt;li&gt;Am I running a little faster this year compared to last?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;While those questions are likely answerable with Garmin and Strava if you dig a little bit, I wanted something that put those insights right infront of my face. &lt;a href=&quot;https://rundashapp.com/&quot;&gt;&lt;em&gt;Enter RunDash&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;h5&gt;RunDash - A One Man Product (for now)&lt;/h5&gt;
+&lt;img class=&quot;post-image&quot; src=&quot;https://marknotfound.com/img/posts/rundash/bkm-22-dashboard.png&quot; alt=&quot;A screenshot of RunDash displaying charts for a marathon training block&quot; /&gt;
+&lt;a href=&quot;https://rundashapp.com/&quot;&gt;RunDash&lt;/a&gt; aims to answer those questions very simply by displaying key metrics on a fixed set of charts. You can log in, glance at your data and log off. You can tag runs however you want and filter on those tags to see trends. I like to tag runs by training block. So I tagged all of my training runs for the 2022 Brooklyn Marathon as &quot;BKM &#39;22&quot;. Now I can filter the metrics by that tag and see how my training progressed for that specific block.
+&lt;p&gt;All of the data comes from Strava, which is the only way to log into the application.&lt;/p&gt;
+&lt;h5&gt;Infrastructure&lt;/h5&gt;
+&lt;p&gt;RunDash is hosted on Heroku. I&#39;ve not really used Heroku before this for any sort of &amp;quot;real&amp;quot; project. People claim it is expensive, but it allows me to get started for free/cheap and is basically ops team as a service. After upgrading to all paid services (one web dyno, one worker dyno, postgres) the total cost is $24/month. That&#39;s cheap operations.&lt;/p&gt;
+&lt;p&gt;For example, after opening signups to my local run club I quickly began to exceed the limits of the free postgres tier. Migrating to a paid postgres tier required less than 2 minutes of down time and running just a few CLI commands. Enter maintenance mode (provided by Heroku), create the new postgres instance, copy the data over, swap the new postgres credentials into an environment variable, leave maintenance mode. Very quick and easy.&lt;/p&gt;
+&lt;h5&gt;Backend&lt;/h5&gt;
+&lt;p&gt;The app is running on a familiar Django + gunicorn + celery + postgres stack. One of the goals of this project is to use and better learn Django best practices, so I am trying to take advantage of all it has to offer. Off the shelf authentication, templating system, unit testing tooling, etc.&lt;/p&gt;
+&lt;p&gt;Heroku handles crons via their scheduler addon. Crons are implemented as Django management commands.&lt;/p&gt;
+&lt;p&gt;Celery handles background tasks like importing activities from Strava or syncing up with incoming webhooks.&lt;/p&gt;
+&lt;h5&gt;Frontend&lt;/h5&gt;
+&lt;p&gt;While I&#39;m perfectly capable of building a React app from scratch, I didn&#39;t want the complexity that comes with building/maintaining a React app. After all, this is (for now) a solo project. It doesn&#39;t make money (it loses exactly $24/month), so I want building it to spark some joy in my life. I learned about &lt;a href=&quot;https://htmx.org/&quot;&gt;HTMX&lt;/a&gt; on Reddit and it seemed like an interesting tool. It&#39;s a very small JS library that lets you add HTML attributes to trigger XHR requests based on events. This means you can build a dynamic single page app &lt;em&gt;without writing any JS&lt;/em&gt;. In fact, &lt;em&gt;there is zero custom JS in RunDash&lt;/em&gt;. An event on the frontend triggers an API call and, instead of the server responding with JSON, it responds with an HTML fragment which HTMX then swaps into the DOM. It&#39;s lightweight, fast, and simple. &lt;em&gt;chef kiss&lt;/em&gt; 👨‍🍳 More on HTMX in a follow up post.&lt;/p&gt;
+&lt;p&gt;The UI is built with &lt;a href=&quot;https://getbootstrap.com/&quot;&gt;Bootstrap 5&lt;/a&gt; and a simple &lt;a href=&quot;https://bootswatch.com/yeti/&quot;&gt;off the shelf theme&lt;/a&gt;. In an effort to keep things simple and reduce complexity, &lt;em&gt;there is zero custom CSS&lt;/em&gt;. With this self-imposed constraint the product and UI stays a little simpler. After all, I&#39;m not a designer. To some degree, it is best to use what Booststrap prescribes. The theme is admittedly not the prettiest or most modern, so this will be the first thing to go if/when I get more resources 😂.&lt;/p&gt;
+&lt;h5&gt;Charting&lt;/h5&gt;
+&lt;p&gt;Charting is done using &lt;a href=&quot;https://www.chartjs.org/&quot;&gt;Chart.js&lt;/a&gt;. Again one of the goals of this project is to keep it as simple as possible. Chart.js is very quick and easy to use. For now, it fits what the product sets out to do.&lt;/p&gt;
+&lt;h5&gt;Up Next&lt;/h5&gt;
+&lt;p&gt;I have more plans for RunDash and hope to eventually turn it into a microbusiness of sorts. I&#39;m not sure what that means yet. Follow up posts will dive more into technical details, marketing, and business efforts.&lt;/p&gt;
 </content>
   </entry>
 </feed>
