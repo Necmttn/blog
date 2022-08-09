@@ -4,7 +4,7 @@
   <subtitle>Thoughts from Mark on whatever his brain is currently obsessing over. Usually tech, running, and photography.</subtitle>
   <link href="https://marknotfound.com/feed.xml" rel="self"/>
   <link href="https://marknotfound.com/"/>
-  <updated>2022-08-08T00:00:00Z</updated>
+  <updated>2022-08-09T00:00:00Z</updated>
   <id>https://marknotfound.com/</id>
   <author>
     <name>Mark Evans</name>
@@ -263,7 +263,7 @@
   <entry>
     <title>Building RunDash - Part 1</title>
     <link href="https://marknotfound.com/posts/building-rundash-part-1/"/>
-    <updated>2022-08-08T00:00:00Z</updated>
+    <updated>2022-08-09T00:00:00Z</updated>
     <id>https://marknotfound.com/posts/building-rundash-part-1/</id>
     <content type="html">&lt;p&gt;Over the last year, I&#39;ve had a lot of fun tracking my progress with Garmin Connect and Strava. They expose tons of data points about each run - pace, distance, heart rate, elevation gain, cadence, etc. These tools are amazing. Strava is a great social network where my friends and I can congratulate eachother after races or particularly grueling workouts. Garmin provides insights into how training is going. Who doesn&#39;t love seeing a chart with a positive trend?&lt;/p&gt;
 &lt;p&gt;However, I sometimes feel these platforms cater to an athlete who is more interested in min/maxing their performance through data insights. There is nothing wrong with this of course, but &lt;em&gt;I am not trying to compete at a high level.&lt;/em&gt; If you are not interested in utilizing it, then too much data or too fine data is just noise. I&#39;m a middle of the pack runner and perfectly content to hang out there. So which metrics - at a high level - show me how I&#39;m improving? What I want is to quantitatively answer the questions:&lt;/p&gt;
