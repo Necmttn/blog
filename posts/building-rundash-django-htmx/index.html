@@ -1,0 +1,135 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="One of my guiding principles behind RunDash&#39;s tech stack is that it should be kept as simple as possible. It is meant to return to a simpler time in web development before single page applications or microservices. That isn&#39;t to say it isn&#39;t modern though. While RunDash is not technically a single page application, full page loads are rare. You will not find webpack or React or babel in the `packages.json`." />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Building RunDash - Django + HTMX" />
+    <meta property="og:url" content="/posts/building-rundash-django-htmx/" />
+    <meta property="og:description" content="One of my guiding principles behind RunDash&#39;s tech stack is that it should be kept as simple as possible. It is meant to return to a simpler time in web development before single page applications or microservices. That isn&#39;t to say it isn&#39;t modern though. While RunDash is not technically a single page application, full page loads are rare. You will not find webpack or React or babel in the `packages.json`." />
+    <meta property="og:image" content="/img/logo.png" />
+    <meta property="og:type" content="article" />
+    <link rel="canonical" href="/posts/building-rundash-django-htmx/" />
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism-tomorrow.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=VT323&display=swap" rel="stylesheet">
+    <title>Building RunDash - Django + HTMX</title>
+    <!-- Panelbear Analytics - We respect your privacy -->
+    <script async src="https://cdn.panelbear.com/analytics.js?site=3eJLZ3UrT5q"></script>
+    <script>
+        window.panelbear = window.panelbear || function() { (window.panelbear.q = window.panelbear.q || []).push(arguments); };
+        panelbear('config', { site: '3eJLZ3UrT5q' });
+    </script>
+  </head>
+  <body>
+    <header class="header">
+      <h1>
+        <a href="/">marknotfound | the blog</a>
+      </h1>
+    </header>
+    <div class="container">
+      <div class="row">
+  <div class="three columns avatar-column">
+  <div class="avatar-container">
+    <a href="/">
+      <img class="avatar" src="/img/avatar.jpg" />
+    </a>
+  </div>
+  <p class="description">mark (he/him) is a software engineer, photographer, runner, and other things too sometimes.</p>
+  <div class="social-container">
+    <a href="mailto:mark@meltdownlabs.com">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </a>
+    <a href="https://github.com/marknotfound">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/markevansnj/">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+    </a>
+    <a href="https://instagram.com/jerseysights">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+    </a>
+  </div>
+  <div class="tag-list">
+  <ol>
+  
+    <li class="tag-item">
+      
+      <a href="/tags/rundash/">rundash</a>
+    </li>
+  
+    <li class="tag-item">
+      
+      <a href="/tags/tech/">tech</a>
+    </li>
+  
+    <li class="tag-item">
+      
+      <a href="/tags/running/">running</a>
+    </li>
+  
+  </ol>
+</div>
+  <div class="avatar-column-footer">
+    <a href="/feed.xml">RSS</a>
+    <a href="https://github.com/marknotfound/blog">View source on GitHub</a>
+  </div>
+</div>
+  <div class="nine columns">
+    <span class="article-date">Monday August 29, 2022</span>
+    <h3 class="article-title">
+      <a href=".">Building RunDash - Django + HTMX</a>
+    </h3>
+    <p>One of my guiding principles behind RunDash's tech stack is that it should be kept as simple as possible. It is meant to return to a simpler time in web development before single page applications or microservices. That isn't to say it isn't modern though. While RunDash is not technically a single page application, full page loads are rare. You will not find webpack or React or babel in the <code>packages.json</code>. And while it isn't powered by a dozen microservices, it is powered by half a dozen Django apps (more if you count dependencies) in a monolith. Django + HTMX has been a powerful combination helping things get done quickly and easily.</p>
+<p>RunDash has only five JS dependencies at the time of writing and three of them are bootstrap related. The other two are <a href="https://www.chartjs.org/">ChartJS</a> and <a href="https://htmx.org/">HTMX</a>.</p>
+<p>There is nothing particularly special about the combination of Django + HTMX. You could likely pair HTMX with any full featured backend framework like Laravel or Rails or Express and get just as much done. This post is more about the zen of developing a modern web application without writing any JS, and for RunDash that means Django + HTMX.</p>
+<p>Disclaimer: This is not intended to be a full Django + HTMX tutorial, but rather showing off how they are used in <a href="https://rundashapp.com/">RunDash</a>. Some examples below are off the top of my head and may not be fully functional code.</p>
+<h3>HTMX</h3>
+<p>HTMX works by listening to events in the DOM and reacting to them by calling an API and swapping the response body (which is HTML) in place of a specified element. This sounds complicated, but a naive example might look like this:</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">hx-get</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/api/form/<span class="token punctuation">"</span></span> <span class="token attr-name">hx-swap</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>innerHTML<span class="token punctuation">"</span></span> <span class="token attr-name">hx-trigger</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>click<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><br>  Load Form<br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>form-container<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+<p>In the above example, clicking the button would trigger a <code>GET</code> request to <code>/api/form/</code> and place the HTML from the response inside of <code>#form-container</code>. This is a simplified example. You could also do something more complex like submit an HTML form using a PATCH request to update some data:</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">hx-patch</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/api/users/123/<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>first_name<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>last_name<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Update<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span></code></pre>
+<h3>Django + HTMX</h3>
+<p>Things get interesting when you begin mixing Django templates with HTMX. All of a sudden, something complicated like server rendered infinite scroll is just a few lines of code away. The following example is nearly identical to how RunDash's activity infinite scroll works:</p>
+<pre class="language-html"><code class="language-html"><span class="token comment">&lt;!-- rendered by some initial page load view --></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>activity-list<span class="token punctuation">"</span></span> <span class="token attr-name">hx-trigger</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>load<span class="token punctuation">"</span></span> <span class="token attr-name">hx-get</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/api/activities/<span class="token punctuation">"</span></span> <span class="token attr-name">hx-swap</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>innerHTML<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+<p>First, we create a <code>div</code> that makes a <code>GET</code> request to <code>/api/activities/</code> when the page finishes loading. This API returns the first page of activities to display. In Django, a class-based view is implemented to look like:</p>
+<pre class="language-python"><code class="language-python"><span class="token comment"># views.py</span><br><span class="token keyword">from</span> django<span class="token punctuation">.</span>views<span class="token punctuation">.</span>generic <span class="token keyword">import</span> ListView<br><br><span class="token keyword">class</span> <span class="token class-name">ActivityListView</span><span class="token punctuation">(</span>ListView<span class="token punctuation">)</span><span class="token punctuation">:</span><br>    model <span class="token operator">=</span> Activity<br>    paginate_by <span class="token operator">=</span> <span class="token number">25</span><br>    template_name <span class="token operator">=</span> <span class="token string">"activities.html"</span><br><br>    <span class="token keyword">def</span> <span class="token function">get_queryset</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span><br>        <span class="token keyword">return</span> Activity<span class="token punctuation">.</span>objects<span class="token punctuation">.</span><span class="token builtin">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br><br><span class="token comment"># urls.py</span><br>urlpatterns <span class="token operator">=</span> <span class="token punctuation">[</span><br>    path<span class="token punctuation">(</span><span class="token string">'api/activities/'</span><span class="token punctuation">,</span> ActivityListView<span class="token punctuation">.</span>as_view<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span><br><span class="token punctuation">]</span></code></pre>
+<p>And last but not least, the Django template is something like this:</p>
+<pre class="language-django"><code class="language-django"><span class="token django language-django"><span class="token delimiter punctuation">{%</span> <span class="token tag keyword">for</span> <span class="token variable">activity</span> <span class="token keyword">in</span> <span class="token variable">activities</span> <span class="token delimiter punctuation">%}</span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><br>    <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>activity<span class="token punctuation">"</span></span><br>    <span class="token attr-name"><span class="token django language-django"><span class="token delimiter punctuation">{%</span> <span class="token tag keyword">if</span> <span class="token variable">forloop</span><span class="token punctuation">.</span><span class="token variable">last</span> <span class="token keyword">and</span> <span class="token variable">page_obj</span><span class="token punctuation">.</span><span class="token variable">has_next</span> <span class="token delimiter punctuation">%}</span></span></span><br>    <span class="token attr-name">hx-get</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/api/activities/?page=<span class="token django language-django"><span class="token delimiter punctuation">{{</span> <span class="token variable">page_obj</span><span class="token punctuation">.</span><span class="token variable">next_page_number</span> <span class="token delimiter punctuation">}}</span></span><span class="token punctuation">"</span></span><br>    <span class="token attr-name">hx-trigger</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>revealed<span class="token punctuation">"</span></span><br>    <span class="token attr-name">hx-swap</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>afterend<span class="token punctuation">"</span></span><br>    <span class="token attr-name"><span class="token django language-django"><span class="token delimiter punctuation">{%</span> <span class="token tag keyword">endif</span> <span class="token delimiter punctuation">%}</span></span></span><br>  <span class="token punctuation">></span></span><br>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span><span class="token django language-django"><span class="token delimiter punctuation">{{</span> <span class="token variable">activity</span><span class="token punctuation">.</span><span class="token variable">title</span> <span class="token delimiter punctuation">}}</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><br><span class="token django language-django"><span class="token delimiter punctuation">{%</span> <span class="token tag keyword">endfor</span> <span class="token delimiter punctuation">%}</span></span></code></pre>
+<p>In the above template, when the loop is on its final iteration we add some HTMX to the <code>div.activity</code> element:</p>
+<ul>
+<li><code>hx-get</code> is set to the endpoint with next page number in the query params</li>
+<li><code>hx-trigger</code> is set to <code>revealed</code> which triggers the request when that element appears in the viewport</li>
+<li><code>hx-swap</code> is set to <code>afterend</code> to append the results after that element</li>
+</ul>
+<p>Now when the user scrolls to the end of the activity list, the last element comes into view and triggers the request to load the next page of results which is then appended to the list. Nice.</p>
+<h3>Forms + HTMX</h3>
+<p>If we combine the two examples above, it becomes trivial to add filtering to a list of model instances.</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>activity-filters<span class="token punctuation">"</span></span> <span class="token attr-name">hx-get</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/api/activities/<span class="token punctuation">"</span></span> <span class="token attr-name">hx-target</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>#activity-list<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>number<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>pace<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Submit<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><br>  <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>activity-list<span class="token punctuation">"</span></span><br>  <span class="token attr-name">hx-get</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/api/activities/<span class="token punctuation">"</span></span><br>  <span class="token attr-name">hx-include</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>#activity-filters<span class="token punctuation">"</span></span><br>  <span class="token attr-name">hx-trigger</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>load<span class="token punctuation">"</span></span><br>  <span class="token attr-name">hx-swap</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>innerHTML<span class="token punctuation">"</span></span><br><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+<p>In the above example, <code>#activity-list</code> will load the first page of activity results including any values set in the <code>#activity-filters</code> form in the query string. When the <code>#activity-filters</code> form is submitted, it will trigger a <code>GET</code> request to <code>/api/activities/</code> with form values included in the query string, so <code>GET /api/activities/?pace=</code> or, if there is a value set, <code>GET /api/activities/?pace=10</code>.</p>
+<h3>Wrapping Up</h3>
+<p>So we can see Django + HTMX is a powerful combination. Modern interactive web applications <em>are possible</em> without writing massive React apps. That is not to suggest React is bad or shouldn't be used, only that there are always other ways of doing things.</p>
+<h3>Questions?</h3>
+<p>Reach out over <a href="mailto:mark@meltdownlabs.com?subject=Django%20+%20HTMX">email</a> or one of the other social links here with questions or to tell me I am wrong about something. 😀</p>
+
+    <div class="article-actions">
+      <a href="/">Go back</a>
+    </div>
+  </div>
+</div>
+    </div>
+    <footer></footer>
+  </body>
+</html>
