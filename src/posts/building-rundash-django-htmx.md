@@ -7,11 +7,11 @@ date: 2022-08-29
 title: Building RunDash - Django + HTMX
 description: One of my guiding principles behind RunDash's tech stack is that it should be kept as simple as possible. It is meant to return to a simpler time in web development before single page applications or microservices. That isn't to say it isn't modern though. While RunDash is not technically a single page application, full page loads are rare. You will not find webpack or React or babel in the `packages.json`.
 ---
-One of my guiding principles behind RunDash's tech stack is that it should be kept as simple as possible. It is meant to return to a simpler time in web development before single page applications or microservices. That isn't to say it isn't modern though. While RunDash is not technically a single page application, full page loads are rare. You will not find webpack or React or babel in the `packages.json`. <!-- excerpt -->And while it isn't powered by a dozen microservices, it is powered by half a dozen Django apps (more if you count dependencies) in a monolith. Django + HTMX has been a powerful combination helping things get done quickly and easily.
+One of my guiding principles behind <a href="https://rundashapp.com/">RunDash</a>'s tech stack is that it should be kept as simple as possible. It is meant to return to a simpler time in web development before single page applications or microservices. That isn't to say it isn't modern though. While <a href="https://rundashapp.com/">RunDash</a> is not technically a single page application, full page loads are rare. You will not find webpack or React or babel in the `packages.json`. <!-- excerpt -->And while it isn't powered by a dozen microservices, it is powered by half a dozen Django apps (more if you count dependencies) in a monolith. Django + HTMX has been a powerful combination helping things get done quickly and easily.
 
-RunDash has only five JS dependencies at the time of writing and three of them are bootstrap related. The other two are [ChartJS][2] and [HTMX][1].
+[RunDash][3] has only five JS dependencies at the time of writing and three of them are bootstrap related. The other two are [ChartJS][2] and [HTMX][1].
 
-There is nothing particularly special about the combination of Django + HTMX. You could likely pair HTMX with any full featured backend framework like Laravel or Rails or Express and get just as much done. This post is more about the zen of developing a modern web application without writing any JS, and for RunDash that means Django + HTMX.
+There is nothing particularly special about the combination of Django + HTMX. You could likely pair HTMX with any full featured backend framework like Laravel or Rails or Express and get just as much done. This post is more about the zen of developing a modern web application without writing any JS, and for [RunDash][3] that means Django + HTMX.
 
 Disclaimer: This is not intended to be a full Django + HTMX tutorial, but rather showing off how they are used in [RunDash][3]. Some examples below are off the top of my head and may not be fully functional code.
 
@@ -36,7 +36,7 @@ In the above example, clicking the button would trigger a `GET` request to `/api
 ```
 
 ### Django + HTMX
-Things get interesting when you begin mixing Django templates with HTMX. All of a sudden, something complicated like server rendered infinite scroll is just a few lines of code away. The following example is nearly identical to how RunDash's activity infinite scroll works:
+Things get interesting when you begin mixing Django templates with HTMX. All of a sudden, something complicated like server rendered infinite scroll is just a few lines of code away. The following example is nearly identical to how [RunDash][3]'s activity infinite scroll works:
 
 ```html
 <!-- rendered by some initial page load view -->
