@@ -4,7 +4,7 @@ tags:
   - rundash
   - tech
 date: 2022-08-09
-title: Building RunDash - Part 1
+title: Building RunDash - Part 1 of ?
 description: Over the last year, I've had a lot of fun tracking my progress with Garmin Connect and Strava. They expose tons of data points about each run - pace, distance, heart rate, elevation gain, cadence, etc. These tools are amazing. Strava is a great social network where my friends and I can congratulate eachother after races or particularly grueling workouts. Garmin provides insights into how training is going. Who doesn't love seeing a chart with a positive trend?
 ---
 Over the last year, I've had a lot of fun tracking my progress with Garmin Connect and Strava. They expose tons of data points about each run - pace, distance, heart rate, elevation gain, cadence, etc. These tools are amazing. Strava is a great social network where my friends and I can congratulate eachother after races or particularly grueling workouts. Garmin provides insights into how training is going. Who doesn't love seeing a chart with a positive trend?<!-- excerpt -->
