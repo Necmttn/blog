@@ -1,0 +1,195 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Linear is an issue tracker and project management tool for software engineering teams. This is perhaps an oversimplification, especially given their ambitions to be much more than that, but it’s enough to provide some context." />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Reverse Engineering Linear&#39;s Sync Magic" />
+    <meta property="og:url" content="/posts/reverse-engineering-linears-sync-magic/" />
+    <meta property="og:description" content="Linear is an issue tracker and project management tool for software engineering teams. This is perhaps an oversimplification, especially given their ambitions to be much more than that, but it’s enough to provide some context." />
+    <meta property="og:image" content="/img/logo.png" />
+    <meta property="og:type" content="article" />
+    <link rel="canonical" href="/posts/reverse-engineering-linears-sync-magic/" />
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism-tomorrow.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=VT323&display=swap" rel="stylesheet">
+    <title>Reverse Engineering Linear&#39;s Sync Magic</title>
+    <!-- Panelbear Analytics - We respect your privacy -->
+    <script async src="https://cdn.panelbear.com/analytics.js?site=3eJLZ3UrT5q"></script>
+    <script>
+        window.panelbear = window.panelbear || function() { (window.panelbear.q = window.panelbear.q || []).push(arguments); };
+        panelbear('config', { site: '3eJLZ3UrT5q' });
+    </script>
+  </head>
+  <body>
+    <header class="header">
+      <h1>
+        <a href="/">marknotfound | the blog</a>
+      </h1>
+    </header>
+    <div class="container">
+      <div class="row">
+  <div class="three columns avatar-column">
+  <div class="avatar-container">
+    <a href="/">
+      <img class="avatar" src="/img/avatar.jpg" />
+    </a>
+  </div>
+  <p class="description">mark (he/him) is a software engineer, photographer, runner, and other things too sometimes.</p>
+  <div class="social-container">
+    <a href="mailto:mark@meltdownlabs.com">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </a>
+    <a href="https://github.com/marknotfound">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/markevansnj/">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+    </a>
+    <a href="https://instagram.com/jerseysights">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+    </a>
+  </div>
+  <div class="tag-list">
+  <ol>
+  
+    <li class="tag-item">
+      
+      <a href="/tags/rundash/">rundash</a>
+    </li>
+  
+    <li class="tag-item">
+      
+      <a href="/tags/tech/">tech</a>
+    </li>
+  
+    <li class="tag-item">
+      
+      <a href="/tags/running/">running</a>
+    </li>
+  
+  </ol>
+</div>
+  <div class="avatar-column-footer">
+    <a href="/feed.xml">RSS</a>
+    <a href="https://github.com/marknotfound/blog">View source on GitHub</a>
+  </div>
+</div>
+  <div class="nine columns">
+    <span class="article-date">Tuesday December 20, 2022</span>
+    <h3 class="article-title">
+      <a href=".">Reverse Engineering Linear&#39;s Sync Magic</a>
+    </h3>
+    <p><a href="https://linear.app/" target="_blank">Linear</a> is an issue tracker and project management tool for software engineering teams. This is an oversimplification, <a href="https://linear.app/releases/2022" target="_blank">especially given their ambitions to be much more than that</a>, but it’s enough to provide some context.</p>
+<h3>Why?</h3>
+<p>I recently signed up for Linear to try it out and see how it was. Immediately I noticed how fast and responsive it felt. Every interaction was instant. It is a breath of fresh air after struggling with other similar and slower tools which I won’t name specifically. I was curious how they were doing things, so first I tried Googling to find their tech stack. I found the <a href="https://twitter.com/artman/status/1119046856317652992">following tweet from 2019 by Tuomas Artman, Linear's co-founder</a> in response to somebody asking how they were building:</p>
+<blockquote>
+<p><em>&quot;A pretty basic stack. React, MobX, Typescript and Node with PostgreSQL. And some home-made sync magic.&quot;</em></p>
+</blockquote>
+<p><em>What exactly is this &quot;home-made sync magic&quot;?</em> This is the question I seek to answer here, so I opened up Chrome DevTools and dove in. The magic seems to mostly be persisting model snapshots for each create, update, or delete action which they call a <code>SyncAction</code>.</p>
+<h3>Summary/TLDR</h3>
+<p>Linear stores a copy of most (all?) data locally in IndexedDB and pushes updates over WebSockets. It uses a bootstrap process to get the initial state and then applies changesets as they come (from you or other users in your org) to keep the local copy of data in sync with the server. It is able to apply a range of changesets from one point in time to another using a concept of <code>SyncAction</code>s.</p>
+<h3>First Bootstrap (Full)</h3>
+<p>Loading Linear App for the first time in a fresh browser (or Incognito) will trigger a request to bootstrap the app with all data it needs to render using their <code>/sync/bootstrap</code> endpoint. This endpoint accepts a <code>type</code> query parameter which can be <code>full</code>, <code>partial</code>, or perhaps other values. This first bootstrap call looks something like:</p>
+<pre><code>GET /sync/bootstrap?type=full&amp;onlyModels=ApiKey,Attachment,RoadmapToProject,Roadmap,ViewPreferences,CustomView,Cycle,Document,Emoji,IssueImport,Integration,IntegrationResource,IntegrationsSettings,WorkflowState,PushSubscription,NotificationSubscription,Team,Issue,IssueLabel,IssueRelation,ProjectUpdate,OauthClientApproval,Notification,OauthClient,Organization,OrganizationDomain,OrganizationInvite,Project,ProjectLink,ProjectUpdateInteraction,Subscription,TeamKey,TeamMembership,Template,User,UserSettings,Webhook,IntegrationTemplate,WorkflowDefinition,Favorite
+</code></pre>
+<p>The <code>onlyModels</code> query parameter lists the models needed to render Linear’s main UI components. Projects, Issues, Teams, etc. So from this bootstrap call, we get the following list of models:</p>
+<ul>
+<li>ApiKey</li>
+<li>Attachment</li>
+<li>RoadmapToProject</li>
+<li>Roadmap</li>
+<li>ViewPreferences</li>
+<li>CustomView</li>
+<li>Cycle</li>
+<li>Document</li>
+<li>Emoji</li>
+<li>IssueImport</li>
+<li>Integration</li>
+<li>IntegrationResource</li>
+<li>IntegrationsSettings</li>
+<li>WorkflowState</li>
+<li>PushSubscription</li>
+<li>NotificationSubscription</li>
+<li>Team</li>
+<li>Issue</li>
+<li>IssueLabel</li>
+<li>IssueRelation</li>
+<li>ProjectUpdate</li>
+<li>OauthClientApproval</li>
+<li>Notification</li>
+<li>OauthClient</li>
+<li>Organization</li>
+<li>OrganizationDomain</li>
+<li>OrganizationInvite</li>
+<li>Project</li>
+<li>ProjectLink</li>
+<li>ProjectUpdateInteraction</li>
+<li>Subscription</li>
+<li>TeamKey</li>
+<li>TeamMembership</li>
+<li>Template</li>
+<li>User</li>
+<li>UserSettings</li>
+<li>Webhook</li>
+<li>IntegrationTemplate</li>
+<li>WorkflowDefinition</li>
+<li>Favorite</li>
+</ul>
+<p>The <code>/sync/bootstrap</code> endpoint returns a <code>text/plain</code> content type. The body consists of multiple lines, each in the shape of <code>ModelName=&lt;JSON representation of model&gt;</code>. For example, a response representing 3 <code>Issue</code>s might look like:</p>
+<pre><code>Issue={&quot;id&quot;:&quot;****&quot;,&quot;createdAt&quot;:&quot;2022-12-20T02:34:01.396Z&quot;,&quot;updatedAt&quot;:&quot;2022-12-20T02:43:40.348Z&quot;,&quot;number&quot;:20,&quot;title&quot;:&quot;Test1&quot;,&quot;priority&quot;:0,&quot;boardOrder&quot;:0,&quot;sortOrder&quot;:-9014,&quot;labelIds&quot;:[],&quot;teamId&quot;:&quot;****&quot;,&quot;projectId&quot;:&quot;****&quot;,&quot;subscriberIds&quot;:[&quot;****&quot;],&quot;previousIdentifiers&quot;:[],&quot;creatorId&quot;:&quot;****&quot;,&quot;stateId&quot;:&quot;****&quot;,&quot;parentId&quot;:&quot;****&quot;,&quot;subIssueSortOrder&quot;:8064.65}
+Issue={&quot;id&quot;:&quot;****&quot;,&quot;createdAt&quot;:&quot;2022-12-20T02:21:59.970Z&quot;,&quot;updatedAt&quot;:&quot;2022-12-20T02:43:40.376Z&quot;,&quot;number&quot;:19,&quot;title&quot;:&quot;Test2&quot;,&quot;priority&quot;:0,&quot;boardOrder&quot;:0,&quot;sortOrder&quot;:-7930,&quot;labelIds&quot;:[],&quot;teamId&quot;:&quot;****&quot;,&quot;projectId&quot;:&quot;****&quot;,&quot;subscriberIds&quot;:[&quot;****&quot;],&quot;previousIdentifiers&quot;:[],&quot;creatorId&quot;:&quot;****&quot;,&quot;stateId&quot;:&quot;****&quot;,&quot;parentId&quot;:&quot;****&quot;,&quot;subIssueSortOrder&quot;:7159.96}
+Issue={&quot;id&quot;:&quot;****&quot;,&quot;createdAt&quot;:&quot;2022-12-20T02:21:08.526Z&quot;,&quot;updatedAt&quot;:&quot;2022-12-20T02:43:40.408Z&quot;,&quot;number&quot;:18,&quot;title&quot;:&quot;Test3&quot;,&quot;priority&quot;:0,&quot;boardOrder&quot;:0,&quot;sortOrder&quot;:-6934,&quot;labelIds&quot;:[],&quot;teamId&quot;:&quot;****&quot;,&quot;projectId&quot;:&quot;****&quot;,&quot;subscriberIds&quot;:[&quot;****&quot;],&quot;previousIdentifiers&quot;:[],&quot;creatorId&quot;:&quot;****&quot;,&quot;stateId&quot;:&quot;****&quot;,&quot;parentId&quot;:&quot;****&quot;,&quot;subIssueSortOrder&quot;:6063.54}
+</code></pre>
+<p>At the end of this list of models is a <code>_metadata_</code> key which looks like:</p>
+<pre><code>_metadata_={&quot;method&quot;:&quot;postgres&quot;,&quot;lastSyncId&quot;:613955486,&quot;subscribedSyncGroups&quot;:[&quot;***&quot;,&quot;***&quot;],&quot;databaseVersion&quot;:514}
+</code></pre>
+<p>Note the <code>lastSyncId</code> value. We will get into this later, but this is how Linear keeps track of data freshness ensuring your local copy of the data is correct.</p>
+<h3>Second Bootstrap (Partial)</h3>
+<p>After the initial bootstrap completes, a second request to <code>/sync/bootstrap/</code> fires off, this time with <code>type=partial</code> instead of <code>type=full</code> and a more limited set of models in the <code>onlyModels</code> query parameter:</p>
+<ul>
+<li>Comment</li>
+<li>IssueHistory</li>
+</ul>
+<p>These models are likely deferred from the first bootstrap since A. there can be multiples of them compared to the # of other models and B. they are less critical to render the page.</p>
+<p>This data is again stored in IndexedDB for fast offline access.</p>
+<h3>Keeping in Sync</h3>
+<h4>WebSockets</h4>
+<p>Every change in Linear appears to result in a new <code>SyncAction</code> object with a unique ID. For example, creating a comment fires a GraphQL query that looks something like:</p>
+<pre class="language-graphql"><code class="language-graphql"><span class="token keyword">mutation</span> <span class="token definition-mutation function">CommentCreate</span> <span class="token punctuation">{</span><br>  <span class="token property-query">commentCreate</span><span class="token punctuation">(</span><span class="token attr-name">input</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token attr-name">id</span><span class="token punctuation">:</span> <span class="token string">"***"</span><span class="token punctuation">,</span> <span class="token attr-name">bodyData</span><span class="token punctuation">:</span> <span class="token string">"{\"type\":\"doc\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Test\"}]}]}"</span><span class="token punctuation">,</span> <span class="token attr-name">issueId</span><span class="token punctuation">:</span> <span class="token string">"***"</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token property">lastSyncId</span><br>  <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p>Notice that the only requested field in the response is <code>lastSyncId</code>. This is how most mutations look in Linear.</p>
+<p>A <code>SyncAction</code> appears to have the following schema:</p>
+<pre class="language-graphql"><code class="language-graphql"><span class="token property">id</span> - <span class="token property">int</span><br><span class="token property">action</span> - <span class="token property-query">str</span> <span class="token punctuation">(</span><span class="token description string">"<span class="token language-markdown">I</span>"</span> <span class="token property">for</span> <span class="token string">"Insert"</span><span class="token punctuation">,</span> <span class="token description string">"<span class="token language-markdown">U</span>"</span> <span class="token property">for</span> <span class="token string">"Update"</span><span class="token punctuation">,</span> <span class="token property">or</span> <span class="token description string">"<span class="token language-markdown">D</span>"</span> <span class="token property">for</span> <span class="token string">"Delete"</span><span class="token punctuation">)</span><br><span class="token property">data</span> - <span class="token property">object</span> <span class="token property">or</span> <span class="token property">null</span><br><span class="token property">modelId</span> - <span class="token property-query">str</span> <span class="token punctuation">(</span><span class="token property">guid</span><span class="token punctuation">)</span><br><span class="token property">modelName</span> - <span class="token property">str</span></code></pre>
+<p>The above mutation results in a WebSocket push from the server which contains an array of <code>SyncAction</code>s and looks like:</p>
+<pre class="language-graphql"><code class="language-graphql"><span class="token punctuation">{</span><br>  <span class="token string">"cmd"</span><span class="token punctuation">:</span> <span class="token string">"sync"</span><span class="token punctuation">,</span><br>  <span class="token string">"sync"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><br>    <span class="token punctuation">{</span><br>      <span class="token string">"id"</span><span class="token punctuation">:</span> <span class="token number">614001964</span><span class="token punctuation">,</span><br>      <span class="token string">"modelName"</span><span class="token punctuation">:</span> <span class="token string">"Comment"</span><span class="token punctuation">,</span><br>      <span class="token string">"modelId"</span><span class="token punctuation">:</span> <span class="token string">"***"</span><span class="token punctuation">,</span><br>      <span class="token string">"action"</span><span class="token punctuation">:</span> <span class="token string">"I"</span><span class="token punctuation">,</span><br>      <span class="token string">"data"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><br>        <span class="token string">"id"</span><span class="token punctuation">:</span> <span class="token string">"***"</span><span class="token punctuation">,</span><br>        <span class="token string">"userId"</span><span class="token punctuation">:</span> <span class="token string">"***"</span><span class="token punctuation">,</span><br>        <span class="token string">"issueId"</span><span class="token punctuation">:</span> <span class="token string">"***"</span><span class="token punctuation">,</span><br>        <span class="token string">"bodyData"</span><span class="token punctuation">:</span> <span class="token string">"{\"type\":\"doc\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Test\"}]}]}"</span><span class="token punctuation">,</span><br>        <span class="token string">"createdAt"</span><span class="token punctuation">:</span> <span class="token string">"2022-12-20T21:31:55.693Z"</span><span class="token punctuation">,</span><br>        <span class="token string">"updatedAt"</span><span class="token punctuation">:</span> <span class="token string">"2022-12-20T21:31:55.693Z"</span><span class="token punctuation">,</span><br>        <span class="token string">"reactionData"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><br>      <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token punctuation">{</span><br>      <span class="token string">"id"</span><span class="token punctuation">:</span> <span class="token number">614001967</span><span class="token punctuation">,</span><br>      <span class="token string">"modelName"</span><span class="token punctuation">:</span> <span class="token string">"Issue"</span><span class="token punctuation">,</span><br>      <span class="token string">"modelId"</span><span class="token punctuation">:</span> <span class="token string">"***"</span><span class="token punctuation">,</span><br>      <span class="token string">"action"</span><span class="token punctuation">:</span> <span class="token string">"U"</span><span class="token punctuation">,</span><br>      <span class="token string">"data"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><br>        <span class="token string">"id"</span><span class="token punctuation">:</span> <span class="token string">"***"</span><span class="token punctuation">,</span><br>        <span class="token string">"title"</span><span class="token punctuation">:</span> <span class="token string">"Test1"</span><span class="token punctuation">,</span><br>        <span class="token string">"number"</span><span class="token punctuation">:</span> <span class="token number">11</span><span class="token punctuation">,</span><br>        <span class="token string">"teamId"</span><span class="token punctuation">:</span> <span class="token string">"***"</span><span class="token punctuation">,</span><br>        <span class="token string">"cycleId"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"dueDate"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"stateId"</span><span class="token punctuation">:</span> <span class="token string">"***"</span><span class="token punctuation">,</span><br>        <span class="token string">"trashed"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"estimate"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"labelIds"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><br>          <span class="token string">"***"</span><br>        <span class="token punctuation">]</span><span class="token punctuation">,</span><br>        <span class="token string">"parentId"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"priority"</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span><br>        <span class="token string">"createdAt"</span><span class="token punctuation">:</span> <span class="token string">"2022-12-20T02:09:39.917Z"</span><span class="token punctuation">,</span><br>        <span class="token string">"creatorId"</span><span class="token punctuation">:</span> <span class="token string">"***"</span><span class="token punctuation">,</span><br>        <span class="token string">"projectId"</span><span class="token punctuation">:</span> <span class="token string">"***"</span><span class="token punctuation">,</span><br>        <span class="token string">"sortOrder"</span><span class="token punctuation">:</span> <span class="token number">81</span><span class="token punctuation">,</span><br>        <span class="token string">"startedAt"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"updatedAt"</span><span class="token punctuation">:</span> <span class="token string">"2022-12-20T21:31:55.693Z"</span><span class="token punctuation">,</span><br>        <span class="token string">"archivedAt"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"assigneeId"</span><span class="token punctuation">:</span> <span class="token string">"***"</span><span class="token punctuation">,</span><br>        <span class="token string">"boardOrder"</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span><br>        <span class="token string">"canceledAt"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"completedAt"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"snoozedById"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"autoClosedAt"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"issueImportId"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"subscriberIds"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><br>          <span class="token string">"***"</span><br>        <span class="token punctuation">]</span><span class="token punctuation">,</span><br>        <span class="token string">"autoArchivedAt"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"snoozedUntilAt"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"sourceMetadata"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"descriptionData"</span><span class="token punctuation">:</span> <span class="token property">null</span><span class="token punctuation">,</span><br>        <span class="token string">"previousIdentifiers"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><br>      <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><br>  <span class="token punctuation">]</span><span class="token punctuation">,</span><br>  <span class="token string">"lastSyncId"</span><span class="token punctuation">:</span> <span class="token number">614001969</span><br><span class="token punctuation">}</span></code></pre>
+<p>The <code>lastSyncId</code> is again used to communicate to the client if it is out of date or not. If there is a delta between the <code>lastSyncId</code> and the one stored locally, then this may trigger a…</p>
+<h3>Delta Sync</h3>
+<p>The <code>/sync/delta</code> endpoint accepts at least three query parameters: <code>lastSyncId</code> and <code>toSyncId</code>, both representing <code>SyncAction</code> IDs. This endpoint returns the same shape as the bootstrap endpoint above, but instead returning only <code>SyncAction</code> objects:</p>
+<pre class="language-graphql"><code class="language-graphql"><span class="token property">SyncAction</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">"id"</span><span class="token punctuation">:</span><span class="token number">614004255</span><span class="token punctuation">,</span><span class="token string">"modelName"</span><span class="token punctuation">:</span><span class="token string">"Comment"</span><span class="token punctuation">,</span><span class="token string">"modelId"</span><span class="token punctuation">:</span><span class="token string">"***"</span><span class="token punctuation">,</span><span class="token string">"action"</span><span class="token punctuation">:</span><span class="token string">"D"</span><span class="token punctuation">}</span><br><span class="token property">SyncAction</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">"id"</span><span class="token punctuation">:</span><span class="token number">614001967</span><span class="token punctuation">,</span><span class="token string">"modelName"</span><span class="token punctuation">:</span><span class="token string">"Issue"</span><span class="token punctuation">,</span><span class="token string">"modelId"</span><span class="token punctuation">:</span><span class="token string">"***"</span><span class="token punctuation">,</span><span class="token string">"action"</span><span class="token punctuation">:</span><span class="token string">"U"</span><span class="token punctuation">,</span><span class="token string">"data"</span><span class="token punctuation">:</span><span class="token punctuation">{</span><span class="token string">"id"</span><span class="token punctuation">:</span><span class="token string">"***"</span><span class="token punctuation">,</span><span class="token string">"title"</span><span class="token punctuation">:</span><span class="token string">"Test123"</span><span class="token punctuation">,</span><span class="token string">"number"</span><span class="token punctuation">:</span><span class="token number">11</span><span class="token punctuation">,</span><span class="token string">"teamId"</span><span class="token punctuation">:</span><span class="token string">"***"</span><span class="token punctuation">,</span><span class="token string">"stateId"</span><span class="token punctuation">:</span><span class="token string">"***"</span><span class="token punctuation">,</span><span class="token string">"labelIds"</span><span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">"***"</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token string">"priority"</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token string">"createdAt"</span><span class="token punctuation">:</span><span class="token string">"2022-12-20T02:09:39.917Z"</span><span class="token punctuation">,</span><span class="token string">"creatorId"</span><span class="token punctuation">:</span><span class="token string">"***"</span><span class="token punctuation">,</span><span class="token string">"projectId"</span><span class="token punctuation">:</span><span class="token string">"***"</span><span class="token punctuation">,</span><span class="token string">"sortOrder"</span><span class="token punctuation">:</span><span class="token number">81</span><span class="token punctuation">,</span><span class="token string">"updatedAt"</span><span class="token punctuation">:</span><span class="token string">"2022-12-20T21:31:55.693Z"</span><span class="token punctuation">,</span><span class="token string">"assigneeId"</span><span class="token punctuation">:</span><span class="token string">"***"</span><span class="token punctuation">,</span><span class="token string">"boardOrder"</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token string">"subscriberIds"</span><span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">"***"</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token string">"previousIdentifiers"</span><span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">}</span><br><span class="token property">_metadata_</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">"syncActionsCount"</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token string">"syncActionsSize"</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">}</span></code></pre>
+<p>These actions are then replayed locally on IndexedDB and the client is back up to date.</p>
+<h3>MobX Disclaimer</h3>
+<p>Tuomas mentions they use MobX. I'm not primarily a frontend engineer, but from what I can tell MobX is a state management library similar to Redux. I'm not sure exactly how much of what I'm describing here is MobX (perhaps MobX can use IndexedDB as its data store?) versus some special handling by Linear's engineering team.</p>
+<h3>Final Thoughts</h3>
+<p>These are just my guesses as to how their system works. I'm making assumptions based on what I could see in Chrome DevTools by observing HTTP requests and WebSocket messages. I would be happy for an engineer at Linear to reach out and explain to me how reality differs from what I've described here ;)</p>
+
+    <div class="article-actions">
+      <a href="/">Go back</a>
+    </div>
+  </div>
+</div>
+    </div>
+    <footer></footer>
+  </body>
+</html>
