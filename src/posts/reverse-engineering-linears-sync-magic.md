@@ -109,7 +109,7 @@ A `SyncAction` appears to have the following schema:
 
 ```graphql
 id - int
-action - str ("I" for "Insert", "U" for "Update", or "D" for "Delete")
+action - str ("I" for "Insert", "U" for "Update", "D" for "Delete", and "A" for "Archive" (?))
 data - object or null
 modelId - str (guid)
 modelName - str
