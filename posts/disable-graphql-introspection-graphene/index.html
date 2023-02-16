@@ -1,0 +1,116 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Introspection in GraphQL allows an attacker to learn everything about your API&#39;s schema including queries, mutations, types, fields, and directives. It is therefore important to disable introspection on production GraphQL APIs." />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="How to Disable GraphQL Introspection in Graphene" />
+    <meta property="og:url" content="/posts/disable-graphql-introspection-graphene/" />
+    <meta property="og:description" content="Introspection in GraphQL allows an attacker to learn everything about your API&#39;s schema including queries, mutations, types, fields, and directives. It is therefore important to disable introspection on production GraphQL APIs." />
+    <meta property="og:image" content="/img/logo.png" />
+    <meta property="og:type" content="article" />
+    <link rel="canonical" href="/posts/disable-graphql-introspection-graphene/" />
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism-tomorrow.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=VT323&display=swap" rel="stylesheet">
+    <title>How to Disable GraphQL Introspection in Graphene</title>
+    <!-- Panelbear Analytics - We respect your privacy -->
+    <script async src="https://cdn.panelbear.com/analytics.js?site=3eJLZ3UrT5q"></script>
+    <script>
+        window.panelbear = window.panelbear || function() { (window.panelbear.q = window.panelbear.q || []).push(arguments); };
+        panelbear('config', { site: '3eJLZ3UrT5q' });
+    </script>
+  </head>
+  <body>
+    <header class="header">
+      <h1>
+        <a href="/">marknotfound | the blog</a>
+      </h1>
+    </header>
+    <div class="container">
+      <div class="row">
+  <div class="three columns avatar-column">
+  <div class="avatar-container">
+    <a href="/">
+      <img class="avatar" src="/img/avatar.jpg" />
+    </a>
+  </div>
+  <p class="description">mark (he/him) is a software engineer, photographer, runner, and other things too sometimes.</p>
+  <div class="social-container">
+    <a href="mailto:mark@meltdownlabs.com">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </a>
+    <a href="https://github.com/marknotfound">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/markevansnj/">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+    </a>
+    <a href="https://instagram.com/jerseysights">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+    </a>
+    <a rel="me" href="https://mastodon.meltdownlabs.com/@mark">Mastodon</a>
+  </div>
+  <div class="tag-list">
+  <ol>
+  
+    <li class="tag-item">
+      
+      <a href="/tags/rundash/">rundash</a>
+    </li>
+  
+    <li class="tag-item">
+      
+      <a href="/tags/tech/">tech</a>
+    </li>
+  
+    <li class="tag-item">
+      
+      <a href="/tags/running/">running</a>
+    </li>
+  
+  </ol>
+</div>
+  <div class="avatar-column-footer">
+    <a href="/feed.xml">RSS</a>
+    <a href="https://github.com/marknotfound/blog">View source on GitHub</a>
+  </div>
+</div>
+  <div class="nine columns">
+    <span class="article-date">Thursday February 16, 2023</span>
+    <h3 class="article-title">
+      <a href=".">How to Disable GraphQL Introspection in Graphene</a>
+    </h3>
+    <p>Introspection in GraphQL allows an attacker to learn everything about your API's schema including queries, mutations, types, fields, and directives. It is therefore important to disable introspection on production GraphQL APIs.</p>
+<h3>Background</h3>
+<p>When searching Google for how to tackle disabling introspection in <a href="https://github.com/graphql-python/graphene">Graphene</a>, the top results recommend a custom middleware approach. However, this isn't very efficient since GraphQL middlewares run for every field in a given operation. If you have any queries with a subtantial amount of fields, it's just a waste of time to check for introspection on every single field to be resolved.</p>
+<h3>The Graphene/GraphQL Way</h3>
+<p>There is a simpler way and it involves GraphQL validation rules. <a href="https://docs.graphene-python.org/en/latest/execution/queryvalidation/#disable-introspection">In fact, Graphene has a section of their docs showing exactly how to do it this way, but it's at the bottom of Google.</a> If you want, you can stop reading this and just click that link. I won't be offended.</p>
+<p>Graphene ships with a validation rule <code>DisableIntrospection</code>. This can be passed to the schema validator like this:</p>
+<pre class="language-python"><code class="language-python"><span class="token keyword">from</span> graphql <span class="token keyword">import</span> validate<br><span class="token keyword">from</span> graphene<span class="token punctuation">.</span>validation <span class="token keyword">import</span> DisableIntrospection<br><span class="token keyword">from</span> my_graphql <span class="token keyword">import</span> schema<br><br>errors <span class="token operator">=</span> validate<span class="token punctuation">(</span><br>  schema<span class="token operator">=</span>schema<span class="token punctuation">,</span><br>  rules<span class="token operator">=</span><span class="token punctuation">(</span>DisableIntrospection<span class="token punctuation">,</span><span class="token punctuation">)</span><br><span class="token punctuation">)</span></code></pre>
+<h3>With Django</h3>
+<p>In my case, I'm using a custom view for the GraphQL endpoint which inherits from <code>graphene_django.views.GraphQLView</code> and happens to override <code>GraphQLView.execute_graphql_request</code> which in turn calls <code>validate</code>. I only want to disable introspection in production, so to conditionally apply the <code>DisableIntrospection</code> rule I use a partial:</p>
+<pre class="language-python"><code class="language-python"><span class="token keyword">from</span> functools <span class="token keyword">import</span> partial<br><span class="token keyword">from</span> graphql <span class="token keyword">import</span> validate<br><span class="token keyword">from</span> graphene<span class="token punctuation">.</span>validation <span class="token keyword">import</span> DisableIntrospection<br><span class="token keyword">from</span> graphene_django<span class="token punctuation">.</span>views <span class="token keyword">import</span> GraphQLView<br><span class="token keyword">from</span> django<span class="token punctuation">.</span>conf <span class="token keyword">import</span> settings<br><br><span class="token keyword">if</span> settings<span class="token punctuation">.</span>PRODUCTION<span class="token punctuation">:</span><br>  validate <span class="token operator">=</span> partial<span class="token punctuation">(</span><br>    validate<span class="token punctuation">,</span><br>    rules<span class="token operator">=</span><span class="token punctuation">(</span>DisableIntrospection<span class="token punctuation">,</span><span class="token punctuation">)</span><br>  <span class="token punctuation">)</span><br><br><span class="token keyword">class</span> <span class="token class-name">MyGraphQLView</span><span class="token punctuation">(</span>GraphQLView<span class="token punctuation">)</span><br>  <span class="token keyword">def</span> <span class="token function">execute_graphql_request</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span><br>    <span class="token comment"># ...</span><br>    errors <span class="token operator">=</span> validate<span class="token punctuation">(</span><br>      self<span class="token punctuation">.</span>schema<span class="token punctuation">.</span>graphql_schema<span class="token punctuation">,</span><br>      document<br>    <span class="token punctuation">)</span><br>    <span class="token comment"># ...</span><br>    <span class="token keyword">return</span> self<span class="token punctuation">.</span>schema<span class="token punctuation">.</span>execute<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>That's it. No middlewares required. Go forth and lock down your GraphQL APIs!</p>
+
+    <div class="article-actions">
+      <a href="/">Go back</a>
+    </div>
+  </div>
+</div>
+    </div>
+    <footer></footer>
+  </body>
+</html>
