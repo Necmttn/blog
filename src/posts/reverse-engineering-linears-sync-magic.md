@@ -8,6 +8,11 @@ description: Linear is an issue tracker and project management tool for software
 ---
 <a href="https://linear.app/" target="_blank">Linear</a> is an issue tracker and project management tool for software engineering teams. This is an oversimplification, <a href="https://linear.app/releases/2022" target="_blank">especially given their ambitions to be much more than that</a>, but it’s enough to provide some context.<!-- excerpt -->
 
+**Update 2023-02-23**: I recently came across a talk given by Tuomas Artman on exactly how their sync works. It is from 2020 so may not be exactly how it still works, but it's likely still relevant:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WxK11RsLqp4?start=2175" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+[He also points to a blog post from Figma which works similarly.](https://www.figma.com/blog/how-figmas-multiplayer-technology-works/)
+
 ### Why?
 I recently signed up for Linear to try it out and see how it was. Immediately I noticed how fast and responsive it felt. Every interaction was instant. It is a breath of fresh air after struggling with other similar and slower tools which I won’t name specifically. I was curious how they were doing things, so first I tried Googling to find their tech stack. I found the [following tweet from 2019 by Tuomas Artman, Linear's co-founder][1] in response to somebody asking how they were building:
 
