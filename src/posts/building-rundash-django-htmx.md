@@ -19,7 +19,7 @@ Disclaimer: This is not intended to be a full Django + HTMX tutorial, but rather
 HTMX works by listening to events in the DOM and reacting to them by calling an API and swapping the response body (which is HTML) in place of a specified element. This sounds complicated, but a naive example might look like this:
 
 ```html
-<button hx-get="/api/form/" hx-swap="innerHTML" hx-trigger="click">
+<button hx-get="/api/form/" hx-target="#form-container" hx-trigger="click">
   Load Form
 </button>
 <div id="form-container"></div>
