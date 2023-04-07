@@ -18,7 +18,7 @@ You will need to begin making choices about that system's design and that is whe
 
 So be curious. Review code from engineers more senior than you. Review code from engineers less senior than you. Ask questions and understand why they are doing something the way they are. What's that function do? What's the difference between a `set` and `list`? Read GitHub issues on packages that you use. Right click a framework class/function and `Go to Definition`. Toss yourself into unfamiliar waters, you will float eventually.
 
-The best part about being curious is that learning becomes a game. You start pulling on a thread wondering what will come next. Keep pulling the thread. It is okay to not understand every single thing you come across. Read it anyway. It will eventually connect to something else you read later and you'll have a nice "A-ha!" moment.
+The best part about being curious is that learning becomes a game. You pull on a thread wondering what it will lead to. Keep pulling the thread. It's okay to not understand every single thing you come across. Read it anyway. It will eventually connect to something else you read later and you'll have a nice "A-ha!" moment.
 
 When curiosity wanes, the job becomes rote and boring. If this happens, maybe you're burnt out. I think this happens to a lot of software engineers who work full time jobs but then also explore tech often in their free time. It's okay to switch gears and go for a walk or bike ride or something. The curiosity will come back.
 
