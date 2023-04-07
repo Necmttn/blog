@@ -3,7 +3,7 @@ tags:
   - posts
   - tech
 date: 2023-02-16
-title: How to Disable GraphQL Introspection in Graphene
+title: How to disable GraphQL introspection in Graphene
 description: Introspection in GraphQL allows an attacker to learn everything about your API's schema including queries, mutations, types, fields, and directives. It is therefore important to disable introspection on production GraphQL APIs.
 ---
 Introspection in GraphQL allows an attacker to learn everything about your API's schema including queries, mutations, types, fields, and directives. It is therefore important to disable introspection on production GraphQL APIs.<!-- excerpt -->

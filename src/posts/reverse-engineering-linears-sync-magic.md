@@ -3,7 +3,7 @@ tags:
   - posts
   - tech
 date: 2022-12-20
-title: Reverse Engineering Linear's Sync Magic
+title: Reverse engineering Linear's sync magic
 description: Linear is an issue tracker and project management tool for software engineering teams. This is perhaps an oversimplification, especially given their ambitions to be much more than that, but it’s enough to provide some context.
 ---
 <a href="https://linear.app/" target="_blank">Linear</a> is an issue tracker and project management tool for software engineering teams. This is an oversimplification, <a href="https://linear.app/releases/2022" target="_blank">especially given their ambitions to be much more than that</a>, but it’s enough to provide some context.<!-- excerpt -->

@@ -3,7 +3,7 @@ tags:
   - posts
   - tech
 date: 2023-02-22
-title: I Guess I'm Full-Stack Now?
+title: I guess I'm full-stack now
 description: Approximately 5 minutes ago I had the epiphany that I'm full-stack now. I've always considered myself a backend guy. But it sort of all at once just dawned on me that I've been doing full-stack for over 3 years now from UIs in React to REST/GraphQL APIs to even some infrastructure.
 ---
 Approximately 5 minutes ago I had the epiphany that I'm full-stack now. I've always considered myself a backend guy. But it sort of all at once just dawned on me that I've been doing full-stack for over 3 years now from UIs in React to REST/GraphQL APIs to even some infrastructure.<!-- excerpt -->
