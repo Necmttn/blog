@@ -4,7 +4,7 @@
   <subtitle>Thoughts from Mark on whatever his brain is currently obsessing over. Usually tech, running, and photography.</subtitle>
   <link href="https://marknotfound.com/feed.xml" rel="self"/>
   <link href="https://marknotfound.com/"/>
-  <updated>2023-02-22T00:00:00Z</updated>
+  <updated>2023-04-07T00:00:00Z</updated>
   <id>https://marknotfound.com/</id>
   <author>
     <name>Mark Evans</name>
@@ -42,7 +42,7 @@
   </entry>
   
   <entry>
-    <title>Running is Kinda Hard</title>
+    <title>Running is kinda hard</title>
     <link href="https://marknotfound.com/posts/running-is-kinda-hard/"/>
     <updated>2021-04-27T00:00:00Z</updated>
     <id>https://marknotfound.com/posts/running-is-kinda-hard/</id>
@@ -80,7 +80,7 @@
   </entry>
   
   <entry>
-    <title>Chia Network Plotting &amp; Farming</title>
+    <title>Chia Network plotting &amp; farming</title>
     <link href="https://marknotfound.com/posts/chia-plotting-and-farming/"/>
     <updated>2021-05-12T00:00:00Z</updated>
     <id>https://marknotfound.com/posts/chia-plotting-and-farming/</id>
@@ -334,7 +334,7 @@
   </entry>
   
   <entry>
-    <title>Reverse Engineering Linear&#39;s Sync Magic</title>
+    <title>Reverse engineering Linear&#39;s sync magic</title>
     <link href="https://marknotfound.com/posts/reverse-engineering-linears-sync-magic/"/>
     <updated>2022-12-20T00:00:00Z</updated>
     <id>https://marknotfound.com/posts/reverse-engineering-linears-sync-magic/</id>
@@ -436,7 +436,7 @@ Issue={&amp;quot;id&amp;quot;:&amp;quot;****&amp;quot;,&amp;quot;createdAt&amp;q
   </entry>
   
   <entry>
-    <title>How to Disable GraphQL Introspection in Graphene</title>
+    <title>How to disable GraphQL introspection in Graphene</title>
     <link href="https://marknotfound.com/posts/disable-graphql-introspection-graphene/"/>
     <updated>2023-02-16T00:00:00Z</updated>
     <id>https://marknotfound.com/posts/disable-graphql-introspection-graphene/</id>
@@ -455,7 +455,7 @@ Issue={&amp;quot;id&amp;quot;:&amp;quot;****&amp;quot;,&amp;quot;createdAt&amp;q
   </entry>
   
   <entry>
-    <title>I Guess I&#39;m Full-Stack Now?</title>
+    <title>I guess I&#39;m full-stack now</title>
     <link href="https://marknotfound.com/posts/i-guess-im-fullstack-now/"/>
     <updated>2023-02-22T00:00:00Z</updated>
     <id>https://marknotfound.com/posts/i-guess-im-fullstack-now/</id>
@@ -465,6 +465,23 @@ Issue={&amp;quot;id&amp;quot;:&amp;quot;****&amp;quot;,&amp;quot;createdAt&amp;q
 &lt;p&gt;Then in 2020 I joined a startup as the third (fourth kind of?) engineer where I&#39;m still at today. And now I regularly carry out full features from UI to API to infra (if needed). React doesn&#39;t scare me, though it used to. I feel fine in it. Like floating in a weird luke warm swimming pool.&lt;/p&gt;
 &lt;p&gt;Up until 8 minutes ago I considered myself a backend engineer. I&#39;m not really though. Not anymore anyway. I&#39;m a full-stack engineer and it wasn&#39;t a choice. It just sort of happened.&lt;/p&gt;
 &lt;p&gt;So if you need me I&#39;ll be over here doing whatever it is I do which is a little bit of everything it turns out.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>You don&#39;t have to be curious, but it sure is nice</title>
+    <link href="https://marknotfound.com/posts/its-nice-to-be-curious/"/>
+    <updated>2023-04-07T00:00:00Z</updated>
+    <id>https://marknotfound.com/posts/its-nice-to-be-curious/</id>
+    <content type="html">&lt;p&gt;In the software biz you don&#39;t have to be curious, but it sure is nice. It&#39;s important to understand the systems and constraints that we work in. There&#39;s often a lot of moving parts, and having a mental model of those moving parts when you&#39;re building is critical. How do you do it?&lt;/p&gt;
+&lt;p&gt;Sure, you might sit down and read all the documentation, all the manuals, all at once. If you&#39;re very academic, this might work for you. I dropped out of community college not once, but twice. The academic style does not work for me. If you&#39;re working in an existing system you might not read the documentation at all. You may just absorb information from existing examples in a code base. Perhaps there is no documentation.&lt;/p&gt;
+&lt;p&gt;But another way is to be curious.&lt;/p&gt;
+&lt;p&gt;Let&#39;s say you&#39;re working in a framework - maybe Django or Laravel or Rails. The beauty of a framework is that &lt;em&gt;you don&#39;t need to know how it works&lt;/em&gt;. It offers you nice abstractions so you don&#39;t need to worry about how to route an HTTP request or how to serialize a database model to JSON. That&#39;s great for getting moving quickly. However as a system grows, it sometimes outgrows the framework unless you&#39;ve very dilligently worked to that framework&#39;s principles and constraints in which case... very impressive work, maybe this post isn&#39;t for you.&lt;/p&gt;
+&lt;p&gt;You will need to begin making choices about that system&#39;s design and that is when the real power comes from not just understanding how to use your tools, but how and why your tools work.&lt;/p&gt;
+&lt;p&gt;So be curious. Review code from engineers more senior than you. Review code from engineers less senior than you. Ask questions and understand why they are doing something the way they are. What&#39;s that function do? What&#39;s the difference between a &lt;code&gt;set&lt;/code&gt; and &lt;code&gt;list&lt;/code&gt;? Read GitHub issues on packages that you use. Right click a framework class/function and &lt;code&gt;Go to Definition&lt;/code&gt;. Toss yourself into unfamiliar waters, you will float eventually.&lt;/p&gt;
+&lt;p&gt;The best part about being curious is that learning becomes a game. You pull on a thread wondering what it will lead to. Keep pulling the thread. It&#39;s okay to not understand every single thing you come across. Read it anyway. It will eventually connect to something else you read later and you&#39;ll have a nice &amp;quot;A-ha!&amp;quot; moment.&lt;/p&gt;
+&lt;p&gt;When curiosity wanes, the job becomes rote and boring. If this happens, maybe you&#39;re burnt out. I think this happens to a lot of software engineers who work full time jobs but then also explore tech often in their free time. It&#39;s okay to switch gears and go for a walk or bike ride or something. The curiosity will come back.&lt;/p&gt;
+&lt;p&gt;You don&#39;t have to be curious, but it sure is nice.&lt;/p&gt;
 </content>
   </entry>
 </feed>
