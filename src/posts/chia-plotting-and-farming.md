@@ -4,7 +4,7 @@ tags:
   - tech
   - meta
 date: 2021-05-12
-title: Chia Network Plotting & Farming
+title: Chia Network plotting & farming
 description: Chia Network is a newer blockchain and smart transaction platform that aims to be greener, more efficient, and more secure than Bitcoin and Ethereum. It is founded by Brahm Cohen, the inventor of the BitTorrent network.
 ---
 [Chia Network](https://www.chia.net/) is a newer blockchain and smart transaction platform that aims to be greener, more efficient, and more secure than Bitcoin and Ethereum. It is founded by Brahm Cohen, the inventor of the BitTorrent network. The project is still young - mainnet launched just seven weeks ago on March 19, 2021. Instead of using specialized hardware to "mine" as in Bitcoin or Ethereum, excess storage space is put to work to "farm". In this post I'll share some of my thoughts since I started farming Chia.<!-- excerpt -->
