@@ -4,7 +4,7 @@
   <subtitle>Thoughts from Mark on whatever his brain is currently obsessing over. Usually tech, running, and photography.</subtitle>
   <link href="https://marknotfound.com/feed.xml" rel="self"/>
   <link href="https://marknotfound.com/"/>
-  <updated>2023-04-07T00:00:00Z</updated>
+  <updated>2023-05-22T00:00:00Z</updated>
   <id>https://marknotfound.com/</id>
   <author>
     <name>Mark Evans</name>
@@ -482,6 +482,22 @@ Issue={&amp;quot;id&amp;quot;:&amp;quot;****&amp;quot;,&amp;quot;createdAt&amp;q
 &lt;p&gt;The best part about being curious is that learning becomes a game. You pull on a thread wondering what it will lead to. Keep pulling the thread. It&#39;s okay to not understand every single thing you come across. Read it anyway. It will eventually connect to something else you read later and you&#39;ll have a nice &amp;quot;A-ha!&amp;quot; moment.&lt;/p&gt;
 &lt;p&gt;When curiosity wanes, the job becomes rote and boring. If this happens, maybe you&#39;re burnt out. I think this happens to a lot of software engineers who work full time jobs but then also explore tech often in their free time. It&#39;s okay to switch gears and go for a walk or bike ride or something. The curiosity will come back.&lt;/p&gt;
 &lt;p&gt;You don&#39;t have to be curious, but it sure is nice.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Building just because (a.k.a. The Khakis.zip Origin Story)</title>
+    <link href="https://marknotfound.com/posts/building-just-because-khakis/"/>
+    <updated>2023-05-22T00:00:00Z</updated>
+    <id>https://marknotfound.com/posts/building-just-because-khakis/</id>
+    <content type="html">&lt;p&gt;I&#39;ve been building software professionally for over 10 years now. I started when I was young, maybe 13 or something. I&#39;m 32 now so I&#39;ve been writing code in some for or another for most of my life. When I was a kid it was fun and creative. I just made whatever websites I felt like, eventually making websites for Counter Strike clans or World of Warcraft guilds.&lt;/p&gt;
+&lt;p&gt;None of that was really for profit and didn&#39;t &amp;quot;provide business value&amp;quot; which is what software engineers do in this biz. But building stuff is fun. Starting new projects is fun. Not caring about priorities or KPIs or OKRs is fun. So now I&#39;m going back to my roots and building shit just because it&#39;s fun to build shit.&lt;/p&gt;
+&lt;p&gt;That is where &lt;a href=&quot;https://khakis.zip/&quot;&gt;khakis.zip&lt;/a&gt; comes in.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://khakis.zip/&quot;&gt;Khakis.zip&lt;/a&gt; started last week because I wanted to buy a &lt;code&gt;.zip&lt;/code&gt; domain. &lt;code&gt;.zip&lt;/code&gt; reminded me of &amp;quot;zippers&amp;quot; like on a pair of pants. I thought &lt;code&gt;pants.zip&lt;/code&gt; would be funny but it was like $300. Then I thought &lt;code&gt;shorts.zip&lt;/code&gt; would be funny but it was $150ish. Too expensive for a dumb bit. Then I thought of &lt;code&gt;khakis.zip&lt;/code&gt; which was available for the low low price of just $13. Plus &lt;code&gt;khakis.zip&lt;/code&gt; is way funnier. &lt;a href=&quot;https://en.wikipedia.org/wiki/Inherently_funny_word&quot;&gt;They say &lt;code&gt;K&lt;/code&gt; is the funniest sounding letter and the word &amp;quot;khakis&amp;quot; has it twice.&lt;/a&gt; You just can&#39;t beat that value.&lt;/p&gt;
+&lt;p&gt;Next I had to figure out what to do with &lt;a href=&quot;https://khakis.zip/&quot;&gt;khakis.zip&lt;/a&gt;. At first I thought I might just move my blog to it, but ultimately decided that I like my blog domain being the same as my Twitter/GitHub handles. So the obvious next idea was to embark on a journey to slowly create a full featured Instagram clone specifically for khakis.&lt;/p&gt;
+&lt;p&gt;So far, Khakis has 10 users including myself and fake account I made for Gap (who I personally think should invest).&lt;/p&gt;
+&lt;p&gt;We are building a small weird community of khaki enthusiasts. It would be very funny to me if it sticks and grows into literally anything at all, but even if it&#39;s just me on there I&#39;m going to keep building it because it&#39;s fun to build stupid shit.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://khakis.zip/&quot;&gt;Join us over at Khakis.zip. All shapes, sizes, and colors of khakis welcome.&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
 </feed>
