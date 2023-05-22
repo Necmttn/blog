@@ -4,9 +4,9 @@ tags:
   - tech
 date: 2023-05-22
 title: Building just because (a.k.a. The Khakis.zip Origin Story)
-description: I've been building software professionally for over 10 years now. I started when I was young, maybe 13 or something. I'm 32 now so I've been writing code in some for or another for most of my life. When I was a kid it was fun, just making whatever websites I felt like and eventually making websites for Counter Strike clans or World of Warcraft guilds.
+description: I've been building software professionally for over 10 years now. I started when I was young, maybe 13 or something. I'm 32 now so I've been writing code in some form or another for most of my life. When I was a kid it was fun, just making whatever websites I felt like and eventually making websites for Counter Strike clans or World of Warcraft guilds.
 ---
-I've been building software professionally for over 10 years now. I started when I was young, maybe 13 or something. I'm 32 now so I've been writing code in some for or another for most of my life. When I was a kid it was fun and creative. I just made whatever websites I felt like, eventually making websites for Counter Strike clans or World of Warcraft guilds.<!-- excerpt -->
+I've been building software professionally for over 10 years now. I started when I was young, maybe 13 or something. I'm 32 now so I've been writing code in some form or another for most of my life. When I was a kid it was fun and creative. I just made whatever websites I felt like, eventually making websites for Counter Strike clans or World of Warcraft guilds.<!-- excerpt -->
 
 None of that was really for profit and didn't "provide business value" which is what software engineers do in this biz. But building stuff is fun. Starting new projects is fun. Not caring about priorities or KPIs or OKRs is fun. So now I'm going back to my roots and building shit just because it's fun to build shit.
 
