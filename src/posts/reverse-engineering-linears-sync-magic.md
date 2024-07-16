@@ -11,6 +11,8 @@ description: Linear is an issue tracker and project management tool for software
 **Update 2023-02-23**: I recently came across a talk given by Tuomas Artman on exactly how their sync works. It is from 2020 so may not be exactly how it still works, but it's likely still relevant:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/WxK11RsLqp4?start=2175" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
+**Update 2024-07016**:  https://www.youtube.com/watch?v=Wo2m3jaJixU follow up talk from Tuomas scaling the sync engine. 
+
 [He also points to a blog post from Figma which works similarly.](https://www.figma.com/blog/how-figmas-multiplayer-technology-works/)
 
 ### Why?
